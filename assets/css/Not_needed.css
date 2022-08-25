@@ -1,0 +1,114 @@
+/* .main_content {
+    position: absolute;
+    left: 295px;
+    top: 75px;
+    width: calc(100vw - 350px);
+    height: calc(100vh);
+    transition-duration: 0.4s;
+} */
+
+/* .top_bar {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: #a95151;
+    width: calc(100vw);
+    z-index: 2;
+}
+
+.top_bar a {
+    text-align: right;
+} */
+
+/*
+img.loadinggif {
+    position: relative;
+    width: 200px;
+    left: 3px;
+    top: 21px;
+}
+.loadingimg {
+    z-index: 9999;
+    margin-left: -175px;
+    border-style: solid;
+    border-radius: 25px;
+    background-color: white;
+    display: none;
+    position: fixed;
+    left: 50%;
+    text-align: center;
+    width: 350px;
+    height: 250px;
+    border-color: #c2c2c2;
+    border-width: 1px;
+    top: 25%;
+}
+.loading_text {
+    position: absolute;
+    top: 105px;
+    left: 122px;
+    font-size: 22px;
+}
+a.button7 {
+    display: inline-block;
+    padding: 0.7em 1.7em;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.2em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: #3369ff;
+    box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+    text-align: center;
+    position: relative;
+}
+a.button7:active {
+    box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+}
+*/
+
+
+
+
+/*
+.swal2-popup {
+    display: none;
+    position: relative;
+    box-sizing: border-box;
+    grid-template-columns: minmax(0, 100%);
+    width: 25em;
+    max-width: 100%;
+    padding: 0 0 1.25em;
+    border: none;
+    border-radius: 5px;
+    background: #fff;
+    color: #545454;
+    font-family: inherit;
+    font-size: 1rem;
+}
+.top_bar {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: #a95151;
+    width: calc(100vw);
+    z-index: 2;
+}
+img.bac_logo {
+    position: absolute;
+    right: 25px;
+    height: 39px;
+    top: 6px;
+}
+img.side_menu_back {
+    opacity: 0.7;
+    z-index: 0;
+    -webkit-mask-image: -webkit-gradient( linear, left 40%, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)) );
+    position: absolute;
+    top: 63px;
+    left: -123px;
+} */

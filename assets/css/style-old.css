@@ -1,0 +1,121 @@
+/* ------------------------------------------------ body ------------------------------------------------*/
+.body {
+    width: calc(100vw - 200px);
+}
+
+/* ------------------------------------------------ Navbar ------------------------------------------------*/
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #212529;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+/* Navbar on hover */
+.topnav a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+/* ------------------------------------------------ Sidebar ------------------------------------------------*/
+
+/* sidebar */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #212529;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+    background-color: #ff8000;
+    color: white;
+}
+
+/* Links on hover */
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    /* height: 1000px; */
+}
+
+/* ------------------------------------------------ Page Content ------------------------------------------------*/
+/* ------------------------------------------------ Card ------------------------------------------------*/
+
+.card {
+    width: 18rem;
+}
+
+/* ------------------------------------------------ Footer ------------------------------------------------*/
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #212529;
+    color: white;
+    text-align: justify;
+}
+
+/* ------------------------------------------------ Screen Media ------------------------------------------------*/
+
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        float: left;
+    }
+
+    div.content {
+        margin-left: 0;
+    }
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
