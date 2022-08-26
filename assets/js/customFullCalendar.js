@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     customButtons: {
       addEventButton: {
-        text: 'add event...',
+        text: 'Add an event!',
         click: function () {
           var dateStr = prompt('Enter a date in YYYY-MM-DD format');
           var date = new Date(dateStr + 'T00:00:00'); // will be in local time
