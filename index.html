@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
@@ -20,112 +20,84 @@
 </head>
 
 <body>
-    <!-- Top bar -->
-    <div class="top-menu-d" id="top_menu">
-        <div class="devicestatus" id="devicestatus" style="text-align: center;">
-            <p1>Test</p1>
-        </div>
-        <div class="user_circle" id="user_circle">
-            <img id="profileicon" class="circleusericon2" src="">
-        </div>
-    </div>
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark main-font">
+        <div class="d-flex flex-grow-1">
+            <span class="w-100 d-lg-none d-block">
+                <!-- hidden spacer to center brand on mobile -->
+            </span>
+            <a class="navbar-brand d-none d-lg-inline-block" href="index.html">
+                <img class="main_logo" src="assets/img/resized-logo.png">
+                Holiday Bookings
+            </a>
 
-    <!-- The sidebar -->
-    <div class="side-menu">
-        <!-- <img class="side-menu_back" src="img/side-menu.svg"> -->
-        <div class="sidebar-main-wrapper">
-            <div class="menu-wrapper" onClick="menu('dashboard')">
-                <div class="sidebar-wrapper">
-                    <div class="sidebar-label"> Dashboard </div>
-                </div>
-            </div>
-            <div class="menu-wrapper">
-                <div class="sidebar-wrapper" onClick="expandmenu('nameHoliday')">
-                    <div class="sidebar-label">
-                        <i class="fa-solid fa-person"></i> {name} Holiday
-                    </div>
-                </div>
-                <div class="sub-items" id="nameHoliday">
-                    <div class="sub-sidebar-wrapper">
-                        <div class="sub-sidebar-label">
-                            <a class="no-decoration" href="name-holiday.html">Holiday Allowance</a>
-                        </div>
-                    </div>
-                    <div class="sub-sidebar-wrapper">
-                        <!-- To include in above div, if necessary, onClick=menu('placeholder') -->
-                        <div class="sub-sidebar-label">
-                            <!-- to include sub heading, use <i class="fas fa-caret-right subicon"></i>  -->
-                            <a class="no-decoration" href="name-book.html">Book Holiday</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- if team leader -->
-            <div class="menu-wrapper" onClick="expandmenu('teamHoliday')">
-                <div class="sidebar-wrapper">
-                    <div class="sidebar-label">
-                        <i class="fa-solid fa-people-group"></i> {team} Holiday
-                    </div>
-                </div>
-                <div class="sub-items" id="teamHoliday">
-                    <div class="sub-sidebar-wrapper">
-                        <div class="sub-sidebar-label">
-                            Check Holiday Allowances
-                        </div>
-                    </div>
-                    <div class="sub-sidebar-wrapper">
-                        <div class="sub-sidebar-label">
-                            Approve / Deny Holiday
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="menu-wrapper" onClick="expandmenu('reports')">
-                <div class="sidebar-wrapper">
-                    <div class="sidebar-label"> Reports </div>
-                </div>
-            </div>
-            <div class="menu-wrapper" onClick="expandmenu('sickness')">
-                <div class="sidebar-wrapper">
-                    <div class="sidebar-label"> Sickness </div>
-                </div>
-            </div>
-            <div class="menu-wrapper" onClick="expandmenu('logOff')">
-                <div class="sidebar-wrapper">
-                    <div class="sidebar-label"> Log Off </div>
-                </div>
+            <div class="w-100 text-right">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
         </div>
-        <a href="www.mfm-it.co.uk" target="_blank">
-        <img class="main_logo" src="assets/img/logo.png">
-        </a>
-    </div>
-
+        <div class="collapse navbar-collapse flex-grow-1 text-right " id="myNavbar">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link m-2 menu-item nav-active">Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link m-2 menu-item dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {name} Holiday
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="name-holiday.html">Holiday Allowance</a>
+                        <a class="dropdown-item" href="name-book.html">Book Holiday</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link m-2 menu-item dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Team Holiday
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Check Holiday</a>
+                        <a class="dropdown-item" href="#">Approve / Deny Requests</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link m-2 menu-item">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link m-2 menu-item">Sickness</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link m-2 menu-item">Log Off</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <!-- Page content -->
-    <div class="maincontent-wrapper">
+    <div class="maincontent-wrapper main-font">
         <div class=card-title>
             <h5>Dashboard</h5>
         </div>
         <div class="card-wrapper">
             <div class="dash-box-body box-changes">
-                <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-day"></i> Who's Off Today</h6>
+                <h6 class="card-subtitle mb-2 bold"><i class="fa-solid fa-calendar-day"></i> Who's Off Today</h6>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
             </div>
             <div class="dash-box-body box-changes">
-                <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-week"></i> Who's Off This Week</h6>
+                <h6 class="card-subtitle mb-2 bold"><i class="fa-solid fa-calendar-week"></i> Who's Off This Week</h6>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
             </div>
             <div class="dash-box-body box-changes">
-                <h6 class="card-subtitle mb-2">Card subtitle</h6>
+                <h6 class="card-subtitle mb-2 bold">Card subtitle</h6>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
             </div>
             <div class="dash-box-body box-changes">
-                <h6 class="card-subtitle mb-2">Card subtitle</h6>
+                <h6 class="card-subtitle mb-2 bold">Card subtitle</h6>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
             </div>
@@ -138,7 +110,8 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">×</span>
                                     <span class="sr-only">close</span></button>
                                 <h4 id="modalTitle" class="modal-title"></h4>
                             </div>
@@ -152,17 +125,10 @@
             </div>
         </div>
     </div>
-    <!-- footer -->
-    <div class="footer-content">
-        <p>Footer</p>
-    </div>
-
-
-
-
-
-
-
+        <!-- footer -->
+        <div class="footer-content">
+            <p>Footer</p>
+        </div>
 
     <!-- Scripts -->
     <script src="assets/js/app.js"></script>
@@ -173,9 +139,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="assets/full-calendar/main.js"></script>
     <script src="assets/full-calendar/locales-all.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"
-        integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 
 
 </body>
