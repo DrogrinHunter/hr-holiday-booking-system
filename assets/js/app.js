@@ -40,7 +40,7 @@ setTimeout(menu, 500, "dashboard");
 
 // Doughnuts on user home page
 
-const ctx = document.getElementById('userHoliday').getContext('2d');
+const ctx = document.getElementById('userHoliday').getContext('2d')
 const data = {
   labels: [
     'Used',
@@ -74,3 +74,8 @@ const userHoliday = new Chart(ctx, {
   },
 });
 
+// ----------------------------------------------------------- 
+function submitForm() {
+  alert("Thank you for submitting your request, someone will get back to you as soon as possible.");
+  return false;
+}

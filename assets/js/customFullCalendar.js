@@ -37,30 +37,30 @@ document.addEventListener('DOMContentLoaded', () => {
     events: [
       {
         title: 'All Day Event',
-        start: '2022-08-01',
+        start: '2022-09-01',
       },
       {
         title: 'Long Event',
-        start: '2022-08-07',
-        end: '2022-08-10',
+        start: '2022-09-07',
+        end: '2022-09-10',
       },
       {
         groupId: '999',
         title: 'Repeating Event',
-        start: '2022-08-09T16:00:00',
+        start: '2022-09-09T16:00:00',
       },
       {
         title: 'Meeting',
-        start: '2022-08-12T14:30:00',
+        start: '2022-09-12T14:30:00',
       },
       {
         title: 'Birthday Party',
-        start: '2022-08-13T07:00:00',
+        start: '2022-09-13T07:00:00',
       },
       {
         title: 'Click for Google',
         url: 'http://google.com/',
-        start: '2022-08-28',
+        start: '2022-09-28',
       },
     ],
   });
