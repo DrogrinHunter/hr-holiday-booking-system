@@ -58,8 +58,8 @@
                         Team Holiday
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Check Holiday</a>
-                        <a class="dropdown-item" href="#">Approve / Deny Requests</a>
+                        <a class="dropdown-item" href="team-check.html">Check Holiday</a>
+                        <a class="dropdown-item" href="team-review.html">Approve / Deny Requests</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -78,11 +78,11 @@
     <!-- Page content -->
     <div class="jumbotron jumbotron-fluid rounded">
         <div class="container">
-            <h1 class="display-4">Welcome, {name}!</h1>
-            <p class="lead">Information relating to your holiday.</p>
+            <h1 class="display-4">Team {team}!</h1>
+            <p class="lead">Information relating to your team's holiday.</p>
             <hr class="my-4">
             <p class="lead">
-                <a class="btn btn-success btn-lg" href="name-book.html" role="button">Book more holiday</a>
+                <a class="btn btn-success btn-lg" href="team-review.html" role="button">Review Requests</a>
             </p>
         </div>
     </div>
@@ -93,17 +93,16 @@
         </div>
         <div class="team-card-wrapper">
             <div class="team-box-body box-changes">
-                <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-day"></i> Your next day off is:</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
+                <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-day"></i> Next Team Member Off:</h6>
+                <p class="card-text">{team-member}</p>
             </div>
-            <div class="dash-box-body box-changes">
-                <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-week"></i> How many days used</h6>
+            <div class="team-box-body box-changes">
+                <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-week"></i> Who has used most of their holiday?</h6>
+                <p class="card-text">{team-member}</p>
             </div>
-            <div class="dash-box-body box-changes">
-                <h6 class="card-subtitle mb-2"><i class="fa-regular fa-calendar-check"></i> Holiday Remaining</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
+            <div class="team-box-body box-changes">
+                <h6 class="card-subtitle mb-2"><i class="fa-regular fa-calendar-check"></i> Who has to book holiday?</h6>
+                <p class="card-text">{team-member}: {team-days-left}.</p>
             </div>
 
 

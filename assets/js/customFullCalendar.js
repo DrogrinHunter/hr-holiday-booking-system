@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const calendar = new FullCalendar.Calendar(calendarEl, {
     // plugins: [ interactivePlugin ],
     initialView: 'dayGridMonth',
-    initialDate: '2022-08-07',
+    defaultDate: 'today',
     selectable: true,
     editable: true,
     // height: auto,
