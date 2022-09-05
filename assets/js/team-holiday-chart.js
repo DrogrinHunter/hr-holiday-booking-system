@@ -1,7 +1,8 @@
-// Doughnuts on user home page
 
-const ctx = document.getElementById('userHoliday').getContext('2d')
-const data = {
+// team check holiday section
+
+const thctx = document.getElementById('teamHoliday').getContext('2d')
+const dataTeamHoliday = {
   labels: [
     'Used',
     'To Take'
@@ -17,18 +18,18 @@ const data = {
   }]
 };
 
-const userHoliday = new Chart(ctx, {
-  type: 'doughnut',
-  data: data,
+const teamHoliday = new Chart(thctx, {
+  type: 'bar',
+  data: dataTeamHoliday,
   options: {
     responsive: true,
     plugins: {
       legend: {
-        position: 'left',
+        position: 'top',
       },
       title: {
         display: true,
-        text: 'Chart.js Doughnut Chart'
+        text: 'Team holiday'
       }
     }
   },
