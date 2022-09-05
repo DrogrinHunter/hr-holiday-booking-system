@@ -1,4 +1,4 @@
-const Utils = chartUtils.init();
+import * from 'assets/js/chartUtils.js';
 
 // team check holiday section
 
