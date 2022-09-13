@@ -1,6 +1,7 @@
 <?php
 include('php-extras/nav.php');
 include('php-extras/css-links.php');
+include('check-perms.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,6 +9,10 @@ include('php-extras/css-links.php');
 <head>
     <?php echo $cssLinks ?>
 </head>
+
+
+
+
 
 <body>
     <!-- Nav Bar -->
@@ -42,6 +47,7 @@ include('php-extras/css-links.php');
         </div>
         <!-- End of Card Wrappers-->
         <!-- Calendar -->
+   
         <div class="calendar-wrapper">
             <div id="calendar">
             </div>
@@ -71,8 +77,29 @@ include('php-extras/css-links.php');
     <script src="assets/full-calendar/locales-all.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
+  <!-- <style>
 
+input#dateinput {
+    position: absolute;
+    left: 964px;
+    top: 284px;
+    width: 250px;
+}
+  </style>
+
+    <script>
+
+$( function() {
+    $( "#dateinput" ).datepicker({ dateFormat: 'yy-mm-dd' });
+  } );
+
+</script>
+<input type="text" name="dateinput" id="dateinput"> -->
 
 </body>
 

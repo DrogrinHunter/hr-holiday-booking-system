@@ -2,30 +2,19 @@
 
 var storage = {};
 
+
+
 function addEventLocal(title, date) {
   
   console.log(title, date);
-  if (storage[date] == undefined) {
-    console.log('this is empty')
-  } else {
-    console.log('hello')
-  }
-  localStorage.setItem('database', JSON.stringify(storage));
-
+ 
+    $.get( "query.php", { name: title, date: date, action:"createevent"} )
+      .done(function( data ) {
+        alert( "Data Loaded: " + data );
+      });
+      
+      
 };
-
-var masterEvents = {};
-// retrieves calendar events
-function retrieveEventLocal(title, date){
-var storage = localStorage.getItem('database');
-retrieveEventLocal.push(`{"title": ${title}}, "start":${date}`);
-if (storage !== null) {
-  console.log(storage);
-  
-
-}}
-
-console.log(masterEvents);
 
 // calendar 
 
@@ -55,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
               start: date,
               allDay: true
             });
-            addEventLocal(title, date);
-
+            addEventLocal(title, dateStr);
+           
             alert('Great. Now, update your database...');
           } else {
             alert('Invalid date.');
@@ -65,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
 
-    events: masterEvents,
+    events: 'query.php?action=getevents',
 
   });
   calendar.render();
