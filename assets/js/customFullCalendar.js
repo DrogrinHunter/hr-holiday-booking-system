@@ -1,3 +1,4 @@
+
 // adds to local storage 
 
 var storage = {};
@@ -23,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     defaultDate: 'today',
-    selectable: true,
-    editable: true,
+    selectable: false,
+    editable: false,
     headerToolbar: {
       left: 'title',
       center: 'addEventButton',
@@ -46,9 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             addEventLocal(title, dateStr);
            
-            alert('Great. Now, update your database...');
+            eventAdded();
           } else {
-            alert('Invalid date.');
+            invDate();
           }
         }
       }
@@ -59,3 +60,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   calendar.render();
 });
+
+
+function eventAdded() {
+  Swal.fire({
+    icon: 'success',
+    title: 'Event Added!',
+    showConfirmButton: false,
+    timer: 2000
+  })
+  
+}
+
+function invDate() {
+  Swal.fire({
+    icon: 'error',
+    title: 'Event not added, check your date.',
+    showConfirmButton: false,
+    timer: 2000
+  })
+}
