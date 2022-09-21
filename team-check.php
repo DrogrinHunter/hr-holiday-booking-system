@@ -1,7 +1,13 @@
 <?php
-include('php-extras/nav.php');
-include('php-extras/css-links.php');
+include('includes/nav.php');
+include('includes/css-links.php');
+include('includes/footer.php');
+
+session_start();
+$teamname = $_SESSION['agentdata']['tuidname'];
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +21,7 @@ include('php-extras/css-links.php');
     <!-- Page content -->
     <div class="jumbotron jumbotron-fluid rounded">
         <div class="container">
-            <h1 class="display-4">Team {team}!</h1>
+            <h1 class="display-4"><?php echo $teamname; ?> Team!</h1>
             <p class="lead">Information relating to your team's holiday.</p>
             <hr class="my-4">
             <p class="lead">
@@ -48,9 +54,7 @@ include('php-extras/css-links.php');
     <!-- End of Card Wrappers-->
 
     <!-- footer -->
-    <div class="footer-content">
-        <p>MFM-IT Holiday Booking System</p>
-    </div>
+    <?php echo $footer ?>
 
 
     <!-- Scripts -->

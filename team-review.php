@@ -1,7 +1,8 @@
 <?php
-include('php-extras/nav.php');
-include('php-extras/css-links.php');
-include('review-holiday-query.php');
+include('includes/nav.php');
+include('includes/css-links.php');
+include('includes/review-holiday-query.php');
+include('includes/footer.php');
 
 
 $id = $_REQUEST["id"];
@@ -10,6 +11,9 @@ if ($_REQUEST["action"] == "approveevent") {
     approveevent($conn, $id);
     exit;
 }
+
+$teamname = $_SESSION['agentdata']['tuidname'];
+
 
 
 ?>
@@ -27,7 +31,7 @@ if ($_REQUEST["action"] == "approveevent") {
     <!-- Page content -->
     <div class="jumbotron jumbotron-fluid rounded">
         <div class="container">
-            <h1 class="display-4">Review Holiday for the {team}!</h1>
+            <h1 class="display-4">Review Holiday for the <?php echo $teamname ?> Team!</h1>
             <p class="lead">Approve or deny holiday for your team.</p>
             <hr class="my-4">
             <p class="lead">
@@ -124,9 +128,7 @@ if ($_REQUEST["action"] == "approveevent") {
     <!-- End of table of data to approve -->
 
     <!-- footer -->
-    <div class="footer-content">
-        <p>MFM-IT Holiday Booking System</p>
-    </div>
+    <?php echo $footer ?>
 
 
     <!-- Scripts -->

@@ -1,6 +1,6 @@
 <?php
-include('php-extras/css-links.php');
-include('php-extras/login-css.php')
+include('includes/css-links.php');
+include('includes/login-css.php')
 ?>
 
 <!DOCTYPE html>

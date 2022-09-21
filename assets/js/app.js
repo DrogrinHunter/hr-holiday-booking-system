@@ -1,15 +1,9 @@
 
 
 // ------------------------------------------------------------- Date Selection -------------------------------------------------------------
-$(function () {
-  $("#date").datepicker({
-    numberOfMonths: 3,
-    showButtonPanel: true,
-    dateFormat: 'yy-mm-dd'
-  });
-});
 
-// ------------------------------------------------------------- Date Selection -------------------------------------------------------------
+
+// ------------------------------------------------------------- Add event to DB -------------------------------------------------------------
 function addEventToDB() {
   console.log("here");
   $.get("query.php", { name: $("#title").val(), date: $("#date").val(), action: "createevent" })
@@ -20,6 +14,27 @@ function addEventToDB() {
   eventSubmitAlert();
 }
 
+// ------------------------------------------------------------- Add user to DB -------------------------------------------------------------
+function createUser() {
+  console.log("createuser");
+  $.get("query.php", { firstname: $('#firstname').val(), name: $("#name").val(), password: $("#psw").val(), email: $("#email").val(), team: $("#teamfield").val(), action: "createuser" })
+    .done(function (data) {
+      alert("Data Loaded: " + data);
+    });
+
+    newUserAlert();
+}
+// ------------------------------------------------------------- Alert for new user -------------------------------------------------------------
+function newUserAlert() {
+  Swal.fire({
+    icon: 'success',
+    title: 'User has been created!',
+    showConfirmButton: true,
+    timer: 4000
+  }).then(function () {
+    location.replace("team-check.php");
+  });
+}
 // ------------------------------------------------------------- Booking Holiday button -------------------------------------------------------------
 function eventSubmitAlert() {
   Swal.fire({

@@ -16,30 +16,33 @@ $email = $_REQUEST["email"];
 $password = $_REQUEST["password"];
 $date = $_REQUEST["date"];
 $name = $_REQUEST["name"];
+$team = $_REQUEST["team"];
+$email = $_REQUEST["email"];
+$firstname = $_REQUEST["firstname"];
 
 
 // Create connection
 $conn = new mysqli($servername, $username, $mysqlpassword, $db);
 
 // Check connection
-if ($conn->connect_error)
-{
+if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 // getusers($conn);
-if ($_REQUEST["action"] == "ath")
-{
+if ($_REQUEST["action"] == "createuser") {
+    createuser($conn, $firstname, $name, $password, $team, $email);
+}
+
+if ($_REQUEST["action"] == "ath") {
     athuser($conn, $email, $password);
 }
 
-if ($_REQUEST['action'] == "createevent")
-{
+if ($_REQUEST['action'] == "createevent") {
     createevent($conn, $name, $date);
 }
 
-if ($_REQUEST["action"] == "getevents")
-{
+if ($_REQUEST["action"] == "getevents") {
     getevents($conn);
 }
 
@@ -49,16 +52,12 @@ function getusers($conn)
     $sql = "SELECT * FROM `users` ";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0)
-    {
+    if ($result->num_rows > 0) {
         // output data of each row
-        while ($row = $result->fetch_assoc())
-        {
+        while ($row = $result->fetch_assoc()) {
             echo "id: " . $row["id"] . " - Name: " . $row["name"] . " " . $row["email"] . "<br>";
         }
-    }
-    else
-    {
+    } else {
         // echo "0 results";
     }
 }
@@ -68,21 +67,22 @@ function athuser($conn, $email, $password)
 {
     $sql = "SELECT * FROM `users` WHERE email='$email' ";
     $result = $conn->query($sql);
-    if ($result->num_rows > 0)
-    {
+    if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        if ($row["password"] == md5($password))
-        {
+        if ($row["password"] == md5($password)) {
             echo '{"status": 1}';
+            // team unique id
+            $teamtuid = $row['tuid'];
+            $sqlteam = "SELECT * FROM `teaminf` WHERE tuid='$teamtuid'";
+            $resultteam = $conn->query($sqlteam);
+            $rowteam = $resultteam->fetch_assoc();
+
+            $row['tuidname'] = $rowteam['teamname']; 
             $_SESSION["agentdata"] = $row;
-        }
-        else
-        {
+        } else {
             echo '{"status": 0}';
         }
-    }
-    else
-    {
+    } else {
         echo '{"status": 0}';
     }
 }
@@ -95,16 +95,25 @@ function createevent($conn, $name, $date)
     $sql = "INSERT INTO `eventdata` (agentguid, name, date)
     VALUES ('$agentguid', '$name', '$date')";
 
-    if ($conn->query($sql) === true)
-    {
+    if ($conn->query($sql) === true) {
         echo "New record created successfully";
-    }
-    else
-    {
+    } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
+// ------------------------------------------- Creating user in the db -------------------------------------------
+function createuser($conn, $firstname, $name, $password, $team, $email)
+{
+    $hashpassword = md5($password);
+    $sql = "INSERT INTO `users` (firstname, name, guid, email, password, tuid, allocdays)
+    VALUES ('$firstname', $name', uuid(), '$email', '$hashpassword', '$team', 28)";
 
+    if ($conn->query($sql) === true) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
 // ------------------------------------------- Getting events from the db -------------------------------------------
 function getevents($conn)
 {
@@ -113,13 +122,11 @@ function getevents($conn)
     $sql = "SELECT * FROM `eventdata`";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0)
-    {
-        while ($row = $result->fetch_assoc())
-        {
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
             $title = $row["name"];
             $date = $row["date"];
-            $date = date('Y-m-d',strtotime($date));
+            $date = date('Y-m-d', strtotime($date));
             $id = $row["id"];
             $approved = $row["approved"];
             if ($approved == 1) {
@@ -127,11 +134,9 @@ function getevents($conn)
             } else {
                 $style = "green";
             }
-            $events[] = ['title' => $title, 'start' => $date, 'color' => $style ];
+            $events[] = ['title' => $title, 'start' => $date, 'color' => $style];
         }
-    }
-    else
-    {
+    } else {
         echo '{"status": 0}';
     }
     echo json_encode($events);
@@ -145,10 +150,8 @@ function userdaysoff($conn)
     $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved=1";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0)
-    {
+    if ($result->num_rows > 0) {
         $approveddays = $result->num_rows;
         $querydays = $_SESSION["agentdata"]["allocdays"];
     }
 }
-

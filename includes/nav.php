@@ -1,6 +1,8 @@
 <?php
 session_start();
 $firstname = $_SESSION["agentdata"]["firstname"];
+$teamname = $_SESSION['agentdata']['tuidname'];
+
 $navbar =
 "
 <nav class='navbar navbar-expand-lg navbar-dark bg-dark main-font'>
@@ -36,11 +38,12 @@ $navbar =
          <li class='nav-item dropdown'>
             <a class='nav-link m-2 menu-item dropdown-toggle' href='#' id='navbarDropdownMenuLink'
                data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-            Team Holiday
+            $teamname Team
             </a>
             <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                <a class='dropdown-item' href='team-check.php'>Check Holiday</a>
                <a class='dropdown-item' href='team-review.php'>Approve / Deny Requests</a>
+               <a class='dropdown-item' href='add-user.php'>Add Users</a>
             </div>
          </li>
          <li class='nav-item'>

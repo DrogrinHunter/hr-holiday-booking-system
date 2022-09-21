@@ -1,7 +1,8 @@
 <?php
-include('php-extras/nav.php');
-include('php-extras/css-links.php');
-include('name-hol-piechart.php');
+include('includes/nav.php');
+include('includes/css-links.php');
+include('includes/name-hol-piechart.php');
+include('includes/footer.php');
 session_start();
 $firstname = $_SESSION["agentdata"]["firstname"];
 ?>
@@ -51,9 +52,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
     <!-- End of Card Wrappers-->
 
     <!-- footer -->
-    <div class="footer-content">
-        <p>MFM-IT Holiday Booking System</p>
-    </div>
+    <?php echo $footer ?>
 
 
     <!-- Scripts -->

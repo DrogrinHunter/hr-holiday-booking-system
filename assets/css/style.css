@@ -94,6 +94,21 @@ body {
     margin-bottom: 100px; */
 }
 
+.dot-approved {
+    height: 25px;
+    width: 25px;
+    background-color: purple;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-requested {
+    height: 25px;
+    width: 25px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
 /* ------------------------------------ User's holiday ------------------------------------ */
 .name-hol-content-wrapper {
     width: 100%;
