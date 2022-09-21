@@ -17,6 +17,7 @@ $password = $_REQUEST["password"];
 $date = $_REQUEST["date"];
 $name = $_REQUEST["name"];
 
+
 // Create connection
 $conn = new mysqli($servername, $username, $mysqlpassword, $db);
 
@@ -108,7 +109,8 @@ function createevent($conn, $name, $date)
 function getevents($conn)
 {
     $agentguid = $_SESSION["agentdata"]["guid"];
-    $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' ";
+    // $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved=1";
+    $sql = "SELECT * FROM `eventdata`";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0)
@@ -117,8 +119,15 @@ function getevents($conn)
         {
             $title = $row["name"];
             $date = $row["date"];
+            $date = date('Y-m-d',strtotime($date));
             $id = $row["id"];
-            $events[] = ['title' => $title, 'start' => $date, ];
+            $approved = $row["approved"];
+            if ($approved == 1) {
+                $style = "purple";
+            } else {
+                $style = "green";
+            }
+            $events[] = ['title' => $title, 'start' => $date, 'color' => $style ];
         }
     }
     else
@@ -128,6 +137,8 @@ function getevents($conn)
     echo json_encode($events);
 }
 // ------------------------------------------- Getting user days off -------------------------------------------
+// this will pull the events that the users have logged with the days that they are allowed and populate the js doughnut
+
 function userdaysoff($conn)
 {
     $agentguid = $_SESSION["agentdata"]["guid"];
@@ -138,6 +149,6 @@ function userdaysoff($conn)
     {
         $approveddays = $result->num_rows;
         $querydays = $_SESSION["agentdata"]["allocdays"];
-        
     }
 }
+

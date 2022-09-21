@@ -113,6 +113,16 @@ body {
     margin-left: 20px;
 }
 
+.card-text-1 {
+    font-size: 100px;
+    text-align: center;
+}
+
+.card-text-2 {
+    font-size: 300px;
+    text-align: center;
+}
+
 .dash-box-body {
     width: calc(31vw - 20px);
     margin-left: 20px;

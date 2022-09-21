@@ -28,32 +28,32 @@ document.addEventListener('DOMContentLoaded', () => {
     editable: false,
     headerToolbar: {
       left: 'title',
-      center: 'addEventButton',
+      // center: 'addEventButton',
       right: 'prev,next today'
     },
-    customButtons: {
-      addEventButton: {
-        text: 'Add an event!',
-        click: function () {
-          var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-          var date = new Date(dateStr + 'T00:00:00');
-          var title = prompt('Event Title: ');
+    // customButtons: {
+    //   addEventButton: {
+    //     text: 'Add an event!',
+    //     click: function () {
+    //       var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+    //       var date = new Date(dateStr + 'T00:00:00');
+    //       var title = prompt('Event Title: ');
 
-          if (!isNaN(date.valueOf())) { // valid?
-            calendar.addEvent({
-              title: title,
-              start: date,
-              allDay: true
-            });
-            addEventLocal(title, dateStr);
+    //       if (!isNaN(date.valueOf())) { // valid?
+    //         calendar.addEvent({
+    //           title: title,
+    //           start: date,
+    //           allDay: true
+    //         });
+    //         addEventLocal(title, dateStr);
            
-            eventAdded();
-          } else {
-            invDate();
-          }
-        }
-      }
-    },
+    //         eventAdded();
+    //       } else {
+    //         invDate();
+    //       }
+    //     }
+    //   }
+    // },
 
     events: 'query.php?action=getevents',
 
@@ -65,7 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function eventAdded() {
   Swal.fire({
     icon: 'success',
-    title: 'Event Added!',
+    title: 'Holiday has now gone for approval!',
+    text: 'Check back later to see if it has been approved.',
     showConfirmButton: false,
     timer: 2000
   })

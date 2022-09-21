@@ -1,7 +1,9 @@
 <?php
+//include('query.php');
 include('php-extras/nav.php');
 include('php-extras/css-links.php');
 include('check-perms.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +18,7 @@ include('check-perms.php');
 
 <body>
     <!-- Nav Bar -->
+
     <?php echo $navbar; ?>
 
     <!-- Page content -->

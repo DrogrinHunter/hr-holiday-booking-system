@@ -28,7 +28,7 @@ include('php-extras/login-css.php')
         // data = JSON.parse(data);
         if (data["status"] == 1) {
           displayAlert();
-          setTimeout(timeOut, 3000)
+          setTimeout(timeOut, 2500)
         } else {
           alert("Error");
           return;

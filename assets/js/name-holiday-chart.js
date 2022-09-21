@@ -8,7 +8,7 @@ const dataUserHoliday = {
   ],
   datasets: [{
     label: 'Holiday to take',
-    data: [28, 5], // first figure is used, second is to take 
+    data: [<?php asdasd; ?>], // first figure is used, second is to take 
     backgroundColor: [
       'rgb(255, 99, 132)',
       'rgb(54, 162, 235)',
