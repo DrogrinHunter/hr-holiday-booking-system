@@ -75,7 +75,7 @@ include('includes/login-css.php')
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link m-2 menu-item dropdown-toggle disabled" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {name} Holiday
+            User's Holiday
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="name-holiday.php">Holiday Allowance</a>

@@ -16,13 +16,14 @@ function addEventToDB() {
 
 // ------------------------------------------------------------- Add user to DB -------------------------------------------------------------
 function createUser() {
-  console.log("createuser");
+  console.log("here");
   $.get("query.php", { firstname: $('#firstname').val(), name: $("#name").val(), password: $("#psw").val(), email: $("#email").val(), team: $("#teamfield").val(), action: "createuser" })
     .done(function (data) {
+      console.log("user created")
       alert("Data Loaded: " + data);
     });
 
-    newUserAlert();
+    // newUserAlert();
 }
 // ------------------------------------------------------------- Alert for new user -------------------------------------------------------------
 function newUserAlert() {

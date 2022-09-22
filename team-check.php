@@ -2,8 +2,8 @@
 include('includes/nav.php');
 include('includes/css-links.php');
 include('includes/footer.php');
+include('includes/team-check-query.php');
 
-session_start();
 $teamname = $_SESSION['agentdata']['tuidname'];
 
 ?>
@@ -37,7 +37,9 @@ $teamname = $_SESSION['agentdata']['tuidname'];
         <div class="team-card-wrapper">
             <div class="team-box-body box-changes">
                 <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-day"></i> Next Team Member Off:</h6>
-                <p class="card-text">{team-member}</p>
+                <p class="card-text">
+                    <?php echo nextPersonOff($conn); ?>.
+                </p>
             </div>
             <div class="team-box-body box-changes">
                 <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-week"></i> Who has used most of their holiday?</h6>

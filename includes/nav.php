@@ -2,6 +2,7 @@
 session_start();
 $firstname = $_SESSION["agentdata"]["firstname"];
 $teamname = $_SESSION['agentdata']['tuidname'];
+$teamleader = $_SESSION['agentdata']['teamleader'];
 
 $navbar =
 "
@@ -34,7 +35,9 @@ $navbar =
                <a class='dropdown-item' href='name-holiday.php'>Holiday Allowance</a>
                <a class='dropdown-item' href='name-book.php'>Book Holiday</a>
             </div>
-         </li>
+         </li>";
+         if ($teamleader == 1) { 
+       $navbar .=  "
          <li class='nav-item dropdown'>
             <a class='nav-link m-2 menu-item dropdown-toggle' href='#' id='navbarDropdownMenuLink'
                data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -45,7 +48,10 @@ $navbar =
                <a class='dropdown-item' href='team-review.php'>Approve / Deny Requests</a>
                <a class='dropdown-item' href='add-user.php'>Add Users</a>
             </div>
-         </li>
+         </li>";
+         } 
+		 $navbar .=
+         "
          <li class='nav-item'>
             <a href='#' class='nav-link m-2 menu-item disabled'>Reports</a>
          </li>

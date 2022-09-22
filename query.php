@@ -65,7 +65,7 @@ function getusers($conn)
 // ------------------------------------------- Authorising users -------------------------------------------
 function athuser($conn, $email, $password)
 {
-    $sql = "SELECT * FROM `users` WHERE email='$email' ";
+    $sql = "SELECT * FROM `users` WHERE email='$email' AND status=1";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -87,6 +87,20 @@ function athuser($conn, $email, $password)
     }
 }
 
+// ------------------------------------------- Creating user in the db -------------------------------------------
+function createuser($conn, $firstname, $name, $email, $password, $team )
+{
+    $hashpassword = md5($password);
+    $sql = "INSERT INTO `users` (firstname, name, guid, email, password, tuid, allocdays)
+    VALUES ('$firstname', $name', uuid(), '$email', '$hashpassword', '$team', 28)";
+
+    if ($conn->query($sql) === true) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
 // ------------------------------------------- Creating events in the db -------------------------------------------
 function createevent($conn, $name, $date)
 {
@@ -101,19 +115,7 @@ function createevent($conn, $name, $date)
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
-// ------------------------------------------- Creating user in the db -------------------------------------------
-function createuser($conn, $firstname, $name, $password, $team, $email)
-{
-    $hashpassword = md5($password);
-    $sql = "INSERT INTO `users` (firstname, name, guid, email, password, tuid, allocdays)
-    VALUES ('$firstname', $name', uuid(), '$email', '$hashpassword', '$team', 28)";
 
-    if ($conn->query($sql) === true) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-}
 // ------------------------------------------- Getting events from the db -------------------------------------------
 function getevents($conn)
 {
