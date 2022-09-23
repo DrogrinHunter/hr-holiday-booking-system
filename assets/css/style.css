@@ -97,7 +97,7 @@ body {
 .dot-approved {
     height: 25px;
     width: 25px;
-    background-color: purple;
+    background-color: green;
     border-radius: 50%;
     display: inline-block;
 }
@@ -105,7 +105,15 @@ body {
 .dot-requested {
     height: 25px;
     width: 25px;
-    background-color: green;
+    background-color: orange;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-denied {
+    height: 25px;
+    width: 25px;
+    background-color: red;
     border-radius: 50%;
     display: inline-block;
 }

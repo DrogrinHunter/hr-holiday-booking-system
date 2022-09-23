@@ -2,7 +2,7 @@
 include('includes/nav.php');
 include('includes/css-links.php');
 include('includes/footer.php');
-include('includes/query.php');
+include('query.php');
 
 ?>
 

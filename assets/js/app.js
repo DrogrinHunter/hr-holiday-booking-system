@@ -3,7 +3,8 @@ function addEventToDB() {
   console.log("here");
   $.get("query.php", { name: $("#title").val(), date: $("#date").val(), action: "createevent" })
     .done(function (data) {
-      alert("Data Loaded: " + data);
+      console.log("Data Loaded: " + data);
+      // alert("Data Loaded: " + data);
     });
 
   eventSubmitAlert();
@@ -18,7 +19,7 @@ function createUser() {
       alert("Data Loaded: " + data);
     });
 
-    newUserAlert();
+  newUserAlert();
 }
 // ------------------------------------------------------------- Alert for new user -------------------------------------------------------------
 function newUserAlert() {
@@ -44,6 +45,30 @@ function eventSubmitAlert() {
   });
 }
 
+// ------------------------------------------------------------- Approve event -------------------------------------------------------------
+function approveid(id) {
+  console.log("here");
+  $.get("team-review.php", { // query.php has the db connection
+    id: id,
+    action: "approveevent"
+  })
+    .done(function (data) {
+      holidayApproveAlert();
+    });
+}
+
+// ------------------------------------------------------------- Deny event -------------------------------------------------------------
+function denyHolId(id) {
+  console.log("here");
+  $.get("team-review.php", { // query.php has the db connection
+    id: id,
+    action: "denyevent"
+  })
+    .done(function (data) {
+      denyHolidayAlert();
+    });
+}
+
 // ------------------------------------------------------------- Approve holiday button -------------------------------------------------------------
 function holidayApproveAlert() {
   Swal.fire({
@@ -55,4 +80,18 @@ function holidayApproveAlert() {
     location.replace("team-review.php");
   });
 }
+
+// ------------------------------------------------------------- Deny holiday button -------------------------------------------------------------
+function denyHolidayAlert() {
+  Swal.fire({
+    icon: 'error',
+    title: 'Holiday Denied!',
+    text: 'Holiday Request has been denied',
+    showConfirmButton: true,
+    timer: 4000
+  }).then(function () {
+    location.replace("team-review.php");
+  });
+}
+
 

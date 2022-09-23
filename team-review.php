@@ -65,6 +65,7 @@ $teamname = $_SESSION['agentdata']['tuidname'];
             <tr>
                 <td>Date</td>
                 <td>Approve</td>
+                <td>Deny</td>
             </tr>
             ";
 
@@ -91,6 +92,7 @@ $teamname = $_SESSION['agentdata']['tuidname'];
             <tr>
                 <td>$date - $eventname</td>
                 <td onClick=\"approveid('$id')\"><i class='fa fa-check' aria-hidden='true'></i>
+                <td onClick=\"denyHolId('$id')\"><i class='fa-solid fa-xmark'></i></i>
                 </td>
             </tr>
             ";
@@ -111,6 +113,17 @@ $teamname = $_SESSION['agentdata']['tuidname'];
                     echo "Error: " . $sql . "<br>" . $conn->error;
                 }
             }
+            // ------------------------------------------- Deny events in the db -------------------------------------------
+            function denyevent($conn, $id)
+            {
+                $sql = "UPDATE `eventdata` SET approved = 2 WHERE id = '$id' ";
+
+                if ($conn->query($sql) === true) {
+                    echo "Denied event successfully";
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+            }
             ?>
         </div>
     </div>
@@ -122,26 +135,11 @@ $teamname = $_SESSION['agentdata']['tuidname'];
 
     <!-- Scripts -->
     <script src="assets/js/app.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        // ------------------------------------------------------------- Approve event -------------------------------------------------------------
-        function approveid(id) {
-            console.log("here");
-            $.get("team-review.php", { //review-holiday-query.php has the db connection
-                    id: id,
-                    action: "approveevent"
-                })
-                .done(function(data) {
-                    holidayApproveAlert();
-                });
 
-
-
-        }
-    </script>
 </body>
 
 </html>

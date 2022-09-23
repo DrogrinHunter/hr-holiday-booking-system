@@ -15,6 +15,8 @@ $firstname = $_REQUEST["firstname"];
 $agentguid = $_SESSION["agentdata"]["guid"];
 $teamname = $_SESSION['agentdata']['tuidname'];
 $id = $_REQUEST["id"];
+$mobile = $_REQUEST["mobile"];
+$jobtitle = $_REQUEST["jobtitle"];
 
 
 // Create connection
@@ -44,6 +46,11 @@ if ($_REQUEST["action"] == "getevents") {
 
 if ($_REQUEST["action"] == "approveevent") {
     approveevent($conn, $id);
+    exit;
+}
+
+if ($_REQUEST["action"] == "denyevent") {
+    denyevent($conn, $id);
     exit;
 }
 
@@ -151,9 +158,11 @@ function getevents($conn)
             $id = $row["id"];
             $approved = $row["approved"];
             if ($approved == 1) {
-                $style = "purple";
-            } else {
                 $style = "green";
+            } elseif ($approved == 0) {
+                $style = "orange";
+            } else {
+                $style = "red";
             }
             $events[] = ['title' => $title, 'start' => $date, 'color' => $style];
         }
@@ -162,22 +171,6 @@ function getevents($conn)
     }
     echo json_encode($events);
 }
-// ------------------------------------------- Getting user days off -------------------------------------------
-// Potentially not used as the JS doughnut has it's own query page
-
-// this will pull the events that the users have logged with the days that they are allowed and populate the js doughnut
-
-// function userdaysoff($conn)
-// {
-//     $agentguid = $_SESSION["agentdata"]["guid"];
-//     $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved=1";
-//     $result = $conn->query($sql);
-
-//     if ($result->num_rows > 0) {
-//         $approveddays = $result->num_rows;
-//         $querydays = $_SESSION["agentdata"]["allocdays"];
-//     }
-// }
 
 // ------------------------------------------- Getting user's next day off -------------------------------------------
 // --------------- This is for name-holiday.php ---------------
@@ -236,5 +229,58 @@ function nextPersonOff($conn)
 
         // $nextPerson = date('l jS \of F Y',strtotime($nextDayVal));
         return $username;
+    }
+}
+
+// ------------------------------------------- Getting which users are off today -------------------------------------------
+// --------------- This is for index.php ---------------
+function usersOffToday($conn)
+{
+    $agentguid = $_SESSION["agentdata"]["guid"];
+
+    $datefrom = date("Y-m-d");
+    $sql = "SELECT * FROM `eventdata` WHERE date = ('$datefrom 00:00:00') AND approved=1 ORDER BY date ASC;";
+    $result = $conn->query($sql);
+    // $row = $result->fetch_assoc();
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+        $eventguid = $row["agentguid"];
+
+        $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
+        $resultUserName = $conn->query($sqlUserName);
+        $rowUserName = $resultUserName->fetch_assoc();
+
+        $username = "";
+        $username .= "$rowUserName[name] <br>";
+
+        echo $username;
+        }
+    }
+}
+
+// ------------------------------------------- Getting which users are off this week -------------------------------------------
+// --------------- This is for index.php ---------------
+function usersOffThisWeek($conn)
+{
+    $agentguid = $_SESSION["agentdata"]["guid"];
+
+    $datefrom = date("Y-m-d");
+    $dateto = Date('Y-m-d', strtotime('+7 days'));
+    $sql = "SELECT * FROM `eventdata` WHERE date BETWEEN ('$datefrom 00:00:00') AND ('$dateto 00:00:00') AND approved=1 GROUP BY agentguid ORDER BY date;";
+    $result = $conn->query($sql);
+    // $row = $result->fetch_assoc();
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+        $eventguid = $row["agentguid"];
+
+        $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
+        $resultUserName = $conn->query($sqlUserName);
+        $rowUserName = $resultUserName->fetch_assoc();
+
+        $username = "";
+        $username .= "$rowUserName[name] <br>";
+
+        echo $username;
+        }
     }
 }

@@ -34,6 +34,7 @@ $navbar =
             <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                <a class='dropdown-item' href='name-holiday.php'>Holiday Allowance</a>
                <a class='dropdown-item' href='name-book.php'>Book Holiday</a>
+               <a class='dropdown-item' href='user-profile.php'>Your Profile</a>
             </div>
          </li>";
          if ($teamleader == 1) { 

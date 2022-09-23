@@ -6,15 +6,15 @@ var storage = {};
 
 
 function addEventLocal(title, date) {
-  
+
   console.log(title, date);
- 
-    $.get( "query.php", { name: title, date: date, action:"createevent"} )
-      .done(function( data ) {
-        alert( "Data Loaded: " + data );
-      });
-      
-      
+
+  $.get("query.php", { name: title, date: date, action: "createevent" })
+    .done(function (data) {
+      alert("Data Loaded: " + data);
+    });
+
+
 };
 
 // calendar 
@@ -31,29 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
       // center: 'addEventButton',
       right: 'prev,next today'
     },
-    // customButtons: {
-    //   addEventButton: {
-    //     text: 'Add an event!',
-    //     click: function () {
-    //       var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-    //       var date = new Date(dateStr + 'T00:00:00');
-    //       var title = prompt('Event Title: ');
 
-    //       if (!isNaN(date.valueOf())) { // valid?
-    //         calendar.addEvent({
-    //           title: title,
-    //           start: date,
-    //           allDay: true
-    //         });
-    //         addEventLocal(title, dateStr);
-           
-    //         eventAdded();
-    //       } else {
-    //         invDate();
-    //       }
-    //     }
-    //   }
+    // Need to look at event mouse over or hover
+    // eventRender: function (info) {
+    //   var tooltip = new Tooltip(info.el, {
+    //     title: info.event.extendedProps.description,
+    //     placement: 'top',
+    //     trigger: 'hover',
+    //     container: 'body'
+    //   });
     // },
+
 
     events: 'query.php?action=getevents',
 
@@ -70,7 +58,7 @@ function eventAdded() {
     showConfirmButton: false,
     timer: 2000
   })
-  
+
 }
 
 function invDate() {
