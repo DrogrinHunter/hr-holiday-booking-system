@@ -13,10 +13,6 @@ include('includes/footer.php');
     <?php echo $cssLinks ?>
 </head>
 
-
-
-
-
 <body>
     <!-- Nav Bar -->
 

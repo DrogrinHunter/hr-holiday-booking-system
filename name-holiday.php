@@ -1,9 +1,10 @@
 <?php
 include('includes/nav.php');
 include('includes/css-links.php');
+include('query.php');
 include('includes/name-hol-piechart.php');
 include('includes/footer.php');
-session_start();
+// session_start();
 $firstname = $_SESSION["agentdata"]["firstname"];
 ?>
 <!DOCTYPE html>

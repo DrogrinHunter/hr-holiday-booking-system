@@ -5,13 +5,6 @@ $mysqlpassword = "kkvSLMw#FFd6";
 $db = "c0dev2mfmit";
 session_start();
 
-header('Content-Type: application/json; charset=utf-8');
-
-//ini_set('display_errors', 1);
-//ini_set('display_startup_errors', 1);
-//error_reporting(E_ALL);
-
-
 $email = $_REQUEST["email"];
 $password = $_REQUEST["password"];
 $date = $_REQUEST["date"];
@@ -19,6 +12,9 @@ $name = $_REQUEST["name"];
 $team = $_REQUEST["team"];
 $email = $_REQUEST["email"];
 $firstname = $_REQUEST["firstname"];
+$agentguid = $_SESSION["agentdata"]["guid"];
+$teamname = $_SESSION['agentdata']['tuidname'];
+$id = $_REQUEST["id"];
 
 
 // Create connection
@@ -46,6 +42,11 @@ if ($_REQUEST["action"] == "getevents") {
     getevents($conn);
 }
 
+if ($_REQUEST["action"] == "approveevent") {
+    approveevent($conn, $id);
+    exit;
+}
+
 // ------------------------------------------- Getting users from db - depreciated -------------------------------------------
 function getusers($conn)
 { //
@@ -65,6 +66,7 @@ function getusers($conn)
 // ------------------------------------------- Authorising users -------------------------------------------
 function athuser($conn, $email, $password)
 {
+    header('Content-Type: application/json; charset=utf-8');
     $sql = "SELECT * FROM `users` WHERE email='$email' AND status=1";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -77,7 +79,7 @@ function athuser($conn, $email, $password)
             $resultteam = $conn->query($sqlteam);
             $rowteam = $resultteam->fetch_assoc();
 
-            $row['tuidname'] = $rowteam['teamname']; 
+            $row['tuidname'] = $rowteam['teamname'];
             $_SESSION["agentdata"] = $row;
         } else {
             echo '{"status": 0}';
@@ -87,12 +89,28 @@ function athuser($conn, $email, $password)
     }
 }
 
-// ------------------------------------------- Creating user in the db -------------------------------------------
-function createuser($conn, $firstname, $name, $email, $password, $team )
+// ------------------------------------------- Get names of all groups -------------------------------------------
+// --------------- This is for add-user.php ---------------
+
+function teamname($conn)
 {
+    $sql = "SELECT * FROM `teaminf`";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $teamname = $row['teamname'];
+        $teamtuid = $row['tuid'];
+        echo "<option value=$teamtuid>$teamname</option>";
+        
+    }
+}
+
+// ------------------------------------------- Creating user in the db -------------------------------------------
+function createuser($conn, $firstname, $name, $email, $password, $team)
+{
+    header('Content-Type: application/json; charset=utf-8');
     $hashpassword = md5($password);
-    $sql = "INSERT INTO `users` (firstname, name, guid, email, password, tuid, allocdays)
-    VALUES ('$firstname', $name', uuid(), '$email', '$hashpassword', '$team', 28)";
+    $sql = "INSERT INTO `users` (firstname, name, guid, email, password, tuid, allocdays, status)
+    VALUES ('$firstname', '$name', uuid(), '$email', '$hashpassword', '$team', 28, 1)";
 
     if ($conn->query($sql) === true) {
         echo "New record created successfully";
@@ -106,8 +124,8 @@ function createevent($conn, $name, $date)
 {
     $agentguid = $_SESSION["agentdata"]["guid"];
     $email = $_SESSION["agentdata"]["email"];
-    $sql = "INSERT INTO `eventdata` (agentguid, name, date)
-    VALUES ('$agentguid', '$name', '$date')";
+    $sql = "INSERT INTO `eventdata` (agentguid, name, date, approved)
+    VALUES ('$agentguid', '$name', '$date', 0)";
 
     if ($conn->query($sql) === true) {
         echo "New record created successfully";
@@ -119,6 +137,7 @@ function createevent($conn, $name, $date)
 // ------------------------------------------- Getting events from the db -------------------------------------------
 function getevents($conn)
 {
+    header('Content-Type: application/json; charset=utf-8');
     $agentguid = $_SESSION["agentdata"]["guid"];
     // $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved=1";
     $sql = "SELECT * FROM `eventdata`";
@@ -144,16 +163,78 @@ function getevents($conn)
     echo json_encode($events);
 }
 // ------------------------------------------- Getting user days off -------------------------------------------
+// Potentially not used as the JS doughnut has it's own query page
+
 // this will pull the events that the users have logged with the days that they are allowed and populate the js doughnut
 
-function userdaysoff($conn)
+// function userdaysoff($conn)
+// {
+//     $agentguid = $_SESSION["agentdata"]["guid"];
+//     $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved=1";
+//     $result = $conn->query($sql);
+
+//     if ($result->num_rows > 0) {
+//         $approveddays = $result->num_rows;
+//         $querydays = $_SESSION["agentdata"]["allocdays"];
+//     }
+// }
+
+// ------------------------------------------- Getting user's next day off -------------------------------------------
+// --------------- This is for name-holiday.php ---------------
+
+// next day off
+function nextDayOff($conn)
 {
-    $agentguid = $_SESSION["agentdata"]["guid"];
-    $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved=1";
+    $sql = "SELECT * FROM `eventdata` WHERE date >= NOW() LIMIT 1;";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $approveddays = $result->num_rows;
-        $querydays = $_SESSION["agentdata"]["allocdays"];
+        $row = $result->fetch_assoc();
+        $nextDayVal = $row["date"];
+        $nextDay = date('l jS \of F Y', strtotime($nextDayVal));
+        return $nextDay;
+    }
+}
+
+// ------------------------------------------- Getting user's remaining days of their holiday -------------------------------------------
+// --------------- This is for name-holiday.php ---------------
+
+function holidayRemaining($conn)
+{
+    $agentguid = $_SESSION["agentdata"]["guid"];
+    $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved = 1";
+    $result = $conn->query($sql);
+
+    $remainder = "";
+    $holRemaining = $result->num_rows;
+    $holRemaining = $_SESSION["agentdata"]["allocdays"] - $result->num_rows;
+    $remainder .= $holRemaining;
+
+    return $remainder;
+}
+
+// ------------------------------------------- Getting next user off for Team Review -------------------------------------------
+// --------------- This is for ream-review.php ---------------
+// next person off
+function nextPersonOff($conn)
+{
+    $agentguid = $_SESSION["agentdata"]["guid"];
+
+    $sql = "SELECT * FROM `eventdata` WHERE date >= NOW() AND approved=1 ORDER BY date ASC LIMIT 1;";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $eventguid = $row["agentguid"];
+
+        $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
+        $resultUserName = $conn->query($sqlUserName);
+        $rowUserName = $resultUserName->fetch_assoc();
+
+
+        $username = $rowUserName["name"];
+
+
+        // $nextPerson = date('l jS \of F Y',strtotime($nextDayVal));
+        return $username;
     }
 }

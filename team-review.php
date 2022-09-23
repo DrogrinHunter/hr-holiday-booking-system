@@ -1,21 +1,10 @@
 <?php
 include('includes/nav.php');
 include('includes/css-links.php');
-include('includes/review-holiday-query.php');
+include('query.php');
 include('includes/footer.php');
 
-
-$id = $_REQUEST["id"];
-
-if ($_REQUEST["action"] == "approveevent") {
-    approveevent($conn, $id);
-    exit;
-}
-
 $teamname = $_SESSION['agentdata']['tuidname'];
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

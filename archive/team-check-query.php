@@ -15,13 +15,13 @@ $agentguid = $_SESSION["agentdata"]["guid"];
 $conn = new mysqli($servername, $username, $mysqlpassword, $db);
 
 // Check connection
-if ($conn->connect_error)
-{
+if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 };
 
 // next person off
-function nextPersonOff($conn) {
+function nextPersonOff($conn)
+{
     $agentguid = $_SESSION["agentdata"]["guid"];
 
     $sql = "SELECT * FROM `eventdata` WHERE date >= NOW() AND approved=1 ORDER BY date ASC LIMIT 1;";
@@ -34,11 +34,11 @@ function nextPersonOff($conn) {
         $resultUserName = $conn->query($sqlUserName);
         $rowUserName = $resultUserName->fetch_assoc();
 
-        
+
         $username = $rowUserName["name"];
 
 
         // $nextPerson = date('l jS \of F Y',strtotime($nextDayVal));
         return $username;
     }
-    }
+}

@@ -2,7 +2,7 @@
 include('includes/nav.php');
 include('includes/css-links.php');
 include('includes/footer.php');
-include('includes/add-user-query.php');
+include('includes/query.php');
 
 ?>
 
@@ -39,14 +39,14 @@ include('includes/add-user-query.php');
                 <option disabled selected value> -- Select a team -- </option>
                 <?php teamname($conn) ?>
             </select>
-
+            
             <div class="clearfix">
                 <button type="button" class="signupbtn" onclick="createUser()">Sign Up</button>
             </div>
         </div>
     </form>
-
-
+    
+    
 
 
 
