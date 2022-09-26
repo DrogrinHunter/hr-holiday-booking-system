@@ -17,6 +17,10 @@ $teamname = $_SESSION['agentdata']['tuidname'];
 $id = $_REQUEST["id"];
 $mobile = $_REQUEST["mobile"];
 $jobtitle = $_REQUEST["jobtitle"];
+$workinghours = $_REQUEST["workinghours"];
+$officeloc = $_REQUEST["officeloc"];
+$homeadd = $_REQUEST["homeadd"];
+$lunchtimes = $_REQUEST["lunchtimes"];
 
 
 // Create connection
@@ -29,7 +33,7 @@ if ($conn->connect_error) {
 
 // getusers($conn);
 if ($_REQUEST["action"] == "createuser") {
-    createuser($conn, $firstname, $name, $password, $team, $email);
+    createuser($conn, $firstname, $name, $password, $team, $email, $workinghours, $mobile, $jobtitle, $officeloc, $homeadd, $lunchtimes);
 }
 
 if ($_REQUEST["action"] == "ath") {
@@ -107,17 +111,16 @@ function teamname($conn)
         $teamname = $row['teamname'];
         $teamtuid = $row['tuid'];
         echo "<option value=$teamtuid>$teamname</option>";
-        
     }
 }
 
 // ------------------------------------------- Creating user in the db -------------------------------------------
-function createuser($conn, $firstname, $name, $email, $password, $team)
+function createuser($conn, $firstname, $name, $email, $password, $team, $workinghours, $mobile, $jobtitle, $officeloc, $homeadd, $lunchtimes)
 {
     header('Content-Type: application/json; charset=utf-8');
     $hashpassword = md5($password);
-    $sql = "INSERT INTO `users` (firstname, name, guid, email, password, tuid, allocdays, status)
-    VALUES ('$firstname', '$name', uuid(), '$email', '$hashpassword', '$team', 28, 1)";
+    $sql = "INSERT INTO `users` (firstname, name, guid, email, password, tuid, allocdays, status, workinghours, mobile, jobtitle, officeloc, homeadd, lunchtimes)
+    VALUES ('$firstname', '$name', uuid(), '$email', '$hashpassword', '$team', 28, 1, $workinghours, $mobile, $jobtitle, $officeloc, $homeadd, $lunchtimes)";
 
     if ($conn->query($sql) === true) {
         echo "New record created successfully";
@@ -244,16 +247,16 @@ function usersOffToday($conn)
     // $row = $result->fetch_assoc();
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-        $eventguid = $row["agentguid"];
+            $eventguid = $row["agentguid"];
 
-        $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
-        $resultUserName = $conn->query($sqlUserName);
-        $rowUserName = $resultUserName->fetch_assoc();
+            $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
+            $resultUserName = $conn->query($sqlUserName);
+            $rowUserName = $resultUserName->fetch_assoc();
 
-        $username = "";
-        $username .= "$rowUserName[name] <br>";
+            $username = "";
+            $username .= "$rowUserName[name] <br>";
 
-        echo $username;
+            echo $username;
         }
     }
 }
@@ -271,16 +274,16 @@ function usersOffThisWeek($conn)
     // $row = $result->fetch_assoc();
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-        $eventguid = $row["agentguid"];
+            $eventguid = $row["agentguid"];
 
-        $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
-        $resultUserName = $conn->query($sqlUserName);
-        $rowUserName = $resultUserName->fetch_assoc();
+            $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
+            $resultUserName = $conn->query($sqlUserName);
+            $rowUserName = $resultUserName->fetch_assoc();
 
-        $username = "";
-        $username .= "$rowUserName[name] <br>";
+            $username = "";
+            $username .= "$rowUserName[name] <br>";
 
-        echo $username;
+            echo $username;
         }
     }
 }

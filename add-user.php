@@ -33,12 +33,52 @@ include('query.php');
 
             <label for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+            <!-- SPACE -->
+            <hr>
+            <!-- SPACE -->
+
+            <label for="psw"><b>Address</b></label>
+            <input type="text" placeholder="Enter User's Address" name="homeadd" id="homeadd" required>
+
+            <label for="psw"><b>Mobile</b></label>
+            <input type="text" placeholder="Enter User's Mobile" name="mobile" id="mobile" required>
+            <!-- SPACE -->
+            <hr>
+            <!-- SPACE -->
+            <label for="psw"><b>Job Title</b></label>
+            <input type="text" placeholder="Enter User's Job Title" name="jobtitle" id="jobtitle" required>
 
             <label for="team"><b>Choose Team</b></label>
             <select id="teamfield">
                 <option disabled selected value> -- Select a team -- </option>
                 <?php teamname($conn) ?>
             </select>
+            
+            <label for="team"><b>Choose Office Location</b></label>
+            <select id="officeloc">
+                <option disabled selected value> -- Select a location -- </option>
+                <option value>STR</option>
+                <option value>Worcester</option>
+                <option value>Data Centre</option>
+            </select>
+             <!-- SPACE -->
+             <hr>
+            <!-- SPACE -->
+            <label for="team"><b>Choose Working Hours</b></label>
+            <select id="workinghours">
+                <option disabled selected value> -- Select a time -- </option>
+                <option value>08:00 - 16:30</option>
+                <option value>08:30 - 17:00</option>
+                <option value>08:45 - 17:30</option>
+            </select>
+
+            <label for="team"><b>Choose Lunch Times</b></label>
+            <select id="workinghours">
+                <option disabled selected value> -- Select a time -- </option>
+                <option value>12:00</option>
+                <option value>13:00</option>
+            </select>
+
             
             <div class="clearfix">
                 <button type="button" class="signupbtn" onclick="createUser()">Sign Up</button>
