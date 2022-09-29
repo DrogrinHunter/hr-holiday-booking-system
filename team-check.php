@@ -42,7 +42,7 @@ include('query.php');
             </div>
             <div class="team-box-body box-changes">
                 <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-week"></i> Who has used most of their holiday?</h6>
-                <canvas id="teamHoliday">here</canvas>
+                <canvas id="teamHoliday"></canvas>
             </div>
             <div class="team-box-body box-changes">
                 <h6 class="card-subtitle mb-2"><i class="fa-regular fa-calendar-check"></i> Who has to book holiday?</h6>

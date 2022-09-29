@@ -4,21 +4,25 @@ include('includes/nav.php');
 include('includes/css-links.php');
 include('includes/footer.php');
 
-$firstname = $_SESSION["agentdata"]["firstname"];
-$name = $_SESSION["agentdata"]["name"];
-$teamname = $_SESSION['agentdata']['tuidname'];
-$teamleader = $_SESSION['agentdata']['teamleader'];
-$email = $_SESSION['agentdata']['email'];
-$mobile = $_SESSION['agentdata']['mobile'];
-$jobtitle = $_SESSION['agentdata']['jobtitle'];
-$officeloc = $_SESSION['agentdata']['officeloc'];
-$homeadd = $_SESSION['agentdata']['homeadd'];
-$workinghours = $_SESSION['agentdata']["workinghours"];
-$lunchtimes = $_SESSION['agentdata']["lunchtimes"];
+$agentguid = $_REQUEST['agentid'];
 
+$sql = "SELECT * FROM `users` WHERE guid = '$agentguid'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+
+$firstname = $row['firstname'];
+$name = $row["name"];
+$teamname = $row['tuidname'];
+$teamleader = $row['teamleader'];
+$email = $row['email'];
+$mobile = $row['mobile'];
+$jobtitle = $row['jobtitle'];
+$officeloc = $row['officeloc'];
+$homeadd = $row['homeadd'];
+$workinghours = $row["workinghours"];
+$lunchtimes = $row["lunchtimes"];
 
 $icon = substr($firstname, 0, 1);
-
 ?>
 
 
@@ -41,9 +45,10 @@ $icon = substr($firstname, 0, 1);
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                            <div class="wrapper-circle">
+                                <div class="wrapper-circle">
                                     <div class="icon">
                                         <?php echo $icon; ?>
+
                                     </div>
                                 </div>
                                 <div class="mt-3">
@@ -63,7 +68,16 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Full Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php echo $name ?>
+                                    <input type="text" value="<?php echo $name ?>" id="name">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">First Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" value="<?php echo $firstname ?>" id="firstname">
                                 </div>
                             </div>
                             <hr>
@@ -72,7 +86,7 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php echo $email ?>
+                                    <input type="text" value="<?php echo $email ?>" id="email">
                                 </div>
                             </div>
                             <hr>
@@ -81,7 +95,7 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Mobile</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php echo $mobile ?>
+                                    <input type="text" value="<?php echo $mobile ?>" id="mobile">
                                 </div>
                             </div>
                             <hr>
@@ -90,7 +104,16 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php echo $homeadd ?>
+                                    <input type="text" value="<?php echo $homeadd ?>" id="homeadd">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Job Title</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" value="<?php echo $jobtitle ?>" id="jobtitle">
                                 </div>
                             </div>
                             <hr>
@@ -99,7 +122,12 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Working Hours</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php echo $workinghours ?>
+                                    <select id="workinghours">
+                                        <option disabled selected value> <?php echo $workinghours ?> </option>
+                                        <option value="08:00 - 16:30">08:00 - 16:30</option>
+                                        <option value="08:30 - 17:00">08:30 - 17:00</option>
+                                        <option value="08:45 - 17:30">08:45 - 17:30</option>
+                                    </select>
                                 </div>
                             </div>
                             <hr>
@@ -108,7 +136,25 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Lunch Times</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php echo $lunchtimes ?>
+                                    <select id="lunchtimes">
+                                        <option disabled selected value> <?php echo $lunchtimes ?> </option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="13:00">13:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Office Location</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <select id="officeloc">
+                                        <option selected value> <?php echo $officeloc ?> </option>
+                                        <option value="STR">STR</option>
+                                        <option value="Worcester">Worcester</option>
+                                        <option value="Data Centre">Data Centre</option>
+                                    </select>
                                 </div>
                             </div>
                             <hr>
@@ -120,7 +166,12 @@ $icon = substr($firstname, 0, 1);
                                     FILE
                                 </div>
                             </div>
-                        
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-info" onclick="editUser('<?php echo $agentid; ?>')">Save</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

@@ -48,6 +48,7 @@ $navbar =
                <a class='dropdown-item' href='team-check.php'>Check Holiday</a>
                <a class='dropdown-item' href='team-review.php'>Approve / Deny Requests</a>
                <a class='dropdown-item' href='add-user.php'>Add Users</a>
+               <a class='dropdown-item' href='team-user-list.php'>Edit Team Members</a>
             </div>
          </li>";
          } 

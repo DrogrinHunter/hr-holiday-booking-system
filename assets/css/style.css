@@ -216,6 +216,26 @@ input {
     color: #495057;
 }
 
+/* ------------------------------------ User's profile ------------------------------------ */
+.container {
+    padding-top: 20px;
+}
+
+.wrapper-circle {
+    border-radius: 50%;
+    background-color: #ffdfd3;
+    width: 100px;
+    height: 100px;
+}
+
+.icon {
+    color: #665954;
+    position: relative;
+    top: 25px;
+    font-size: 32px;
+    width: 100px;
+    text-align: center;
+}
 /* ------------------------------------ Team Check holiday ------------------------------------ */
 .team-check-content-wrapper {
     width: 100%;
@@ -238,6 +258,7 @@ input {
     max-width: 1100px !important;
     height: auto !important;
 }
+
 
 /* ------------------ footer ------------------ */
 .page-wrap:after {

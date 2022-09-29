@@ -1,7 +1,12 @@
 // ------------------------------------------------------------- Add event to DB -------------------------------------------------------------
 function addEventToDB() {
   console.log("here");
-  $.get("query.php", { name: $("#title").val(), date: $("#date").val(), action: "createevent" })
+  $.get("query.php", {
+    name: $("#title").val(),
+    date: $("#date").val(),
+    todate: $("#toDate").val(),
+    action: "createevent"
+  })
     .done(function (data) {
       console.log("Data Loaded: " + data);
       // alert("Data Loaded: " + data);
@@ -12,14 +17,52 @@ function addEventToDB() {
 
 // ------------------------------------------------------------- Add user to DB -------------------------------------------------------------
 function createUser() {
-  console.log("here");
-  $.get("query.php", { firstname: $('#firstname').val(), name: $("#name").val(), password: $("#psw").val(), email: $("#email").val(), team: $("#teamfield").val(), action: "createuser" })
+  console.log('here');
+  $.get('query.php', {
+    firstname: $('#firstname').val(),
+    name: $('#name').val(),
+    password: $('#psw').val(),
+    team: $('#teamfield').val(),
+    email: $('#email').val(),
+    workinghours: $('#workinghours').val(),
+    mobile: $('#mobile').val(),
+    jobtitle: $('#jobtitle').val(),
+    officeloc: $('#officeloc').val(),
+    homeadd: $('#homeadd').val(),
+    lunchtimes: $('#lunchtimes').val(),
+    action: 'createuser'
+  })
     .done(function (data) {
       console.log("user created")
       alert("Data Loaded: " + data);
     });
 
   newUserAlert();
+}
+
+// ------------------------------------------------------------- Edit user in DB -------------------------------------------------------------
+function editUser(agentid) {
+  console.log('here');
+
+  $.get('query.php', {
+    firstname: $('#firstname').val(),
+    name: $('#name').val(),
+    email: $('#email').val(),
+    workinghours: $('#workinghours').val(),
+    mobile: $('#mobile').val(),
+    jobtitle: $('#jobtitle').val(),
+    officeloc: $('#officeloc').val(),
+    homeadd: $('#homeadd').val(),
+    lunchtimes: $('#lunchtimes').val(),
+    agentid: agentid,
+    action: 'edituser'
+  })
+    .done(function (data) {
+      console.log("user edited");
+      console.log("Data Loaded: " + data);
+    });
+
+  editUserAlert();
 }
 // ------------------------------------------------------------- Alert for new user -------------------------------------------------------------
 function newUserAlert() {
@@ -30,6 +73,17 @@ function newUserAlert() {
     timer: 4000
   }).then(function () {
     location.replace("team-check.php");
+  });
+}
+// ------------------------------------------------------------- Alert for editing a user -------------------------------------------------------------
+function editUserAlert() {
+  Swal.fire({
+    icon: 'success',
+    title: 'User has been edited!',
+    showConfirmButton: true,
+    timer: 4000
+  }).then(function () {
+    location.replace("team-user-list.php");
   });
 }
 // ------------------------------------------------------------- Booking Holiday button -------------------------------------------------------------
@@ -93,5 +147,8 @@ function denyHolidayAlert() {
     location.replace("team-review.php");
   });
 }
+// ------------------------------------------------------------- Open Profile -------------------------------------------------------------
+function openProfile(agentguid) {
+  location.replace("team-edit-user.php?agentid=" + agentguid);
 
-
+}

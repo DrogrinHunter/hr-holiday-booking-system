@@ -33,37 +33,16 @@ $teamname = $_SESSION['agentdata']['tuidname'];
         <div class=card-title>
             <h5>Approve or Deny Requests</h5>
         </div>
-        <!-- <div class="team-card-wrapper">
-            <div class="team-box-body box-changes">
-                <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-day"></i> Next Team Member Off:</h6>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a dolor vel dolor
-                    convallis lacinia. Morbi dictum aliquet ante, vitae ornare justo commodo at. Donec aliquam tincidunt
-                    facilisis. Aliquam vulputate nulla nibh, ut faucibus mauris lacinia eu. Nam rutrum nisi id diam
-                    aliquam, eu imperdiet felis aliquet. Proin ut turpis lorem.
-                </p>
-            </div>
-            <div class="team-box-body box-changes">
-                <h6 class="card-subtitle mb-2"><i class="fa-solid fa-calendar-week"></i> Who has used most of their
-                    holiday?</h6>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a dolor vel dolor
-                    convallis lacinia. Morbi dictum aliquet ante, vitae ornare justo commodo at. Donec aliquam tincidunt
-                    facilisis. Aliquam vulputate nulla nibh, ut faucibus mauris lacinia eu. Nam rutrum nisi id diam
-                    aliquam, eu imperdiet felis aliquet. Proin ut turpis lorem.</p>
-            </div>
-            <div class="team-box-body box-changes">
-                <h6 class="card-subtitle mb-2"><i class="fa-regular fa-calendar-check"></i> Who has to book holiday?
-                </h6>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a dolor vel dolor
-                    convallis lacinia. Morbi dictum aliquet ante, vitae ornare justo commodo at. Donec aliquam tincidunt
-                    facilisis. Aliquam vulputate nulla nibh, ut faucibus mauris lacinia eu. Nam rutrum nisi id diam
-                    aliquam, eu imperdiet felis aliquet. Proin ut turpis lorem.</p>
-            </div> 
-        </div>-->
+
         <div class="custom-table">
             <?php
             $htmltable .= "<table class='custom-table' width='500' border='0' cellpadding='3' padding-bottom='50' >
             <tr>
-                <td>Date</td>
+                <td>Requested on</td>
+                <td>Date From</td>
+                <td>Date To</td>
+                <td>Total Days</td>
+                <td>Event Name</td>
                 <td>Approve</td>
                 <td>Deny</td>
             </tr>
@@ -71,10 +50,15 @@ $teamname = $_SESSION['agentdata']['tuidname'];
 
             // table query
             $agentguid = $_SESSION["agentdata"]["guid"];
-            // $agentguid = $_SESSION["eventdata"]["id"];
+            // function that compares two dates and works out the time in between
+            function dateDiff($date, $todate)
+            {
+                $date1_ts = strtotime($date);
+                $date2_ts = strtotime($todate);
+                $diff = $date2_ts - $date1_ts;
+                return round($diff / 86400);
+            }
 
-
-            // $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved = 0";
             $sql = "SELECT * FROM `eventdata` WHERE approved = 0";
             $result = $conn->query($sql);
             if (!$result) {
@@ -84,13 +68,21 @@ $teamname = $_SESSION['agentdata']['tuidname'];
             while ($row = $result->fetch_assoc()) {
                 $_SESSION["eventdata"] = $row;
                 $id = $row["id"];
+                $submittedon = $row["submittedon"];
+                $date = $row["date"];
+                $todate = $row["todate"];
                 $name = $row["agentdata"]["name"];
                 $eventname = $row["name"];
-                $date = $row["date"];
+
+                $dateDiff = dateDiff($date, $todate);
                 $htmltable .= "
 
             <tr>
-                <td>$date - $eventname</td>
+                <td>$submittedon</td>
+                <td>$date</td>
+                <td>$todate</td>
+                <td>$dateDiff</td>
+                <td>$eventname</td>
                 <td onClick=\"approveid('$id')\"><i class='fa fa-check' aria-hidden='true'></i>
                 <td onClick=\"denyHolId('$id')\"><i class='fa-solid fa-xmark'></i></i>
                 </td>

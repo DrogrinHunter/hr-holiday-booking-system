@@ -1,21 +1,21 @@
 
 // adds to local storage 
-
-var storage = {};
-
-
-
-function addEventLocal(title, date) {
-
-  console.log(title, date);
-
-  $.get("query.php", { name: title, date: date, action: "createevent" })
-    .done(function (data) {
-      alert("Data Loaded: " + data);
-    });
+// no longer used 
+// var storage = {};
 
 
-};
+
+// function addEventLocal(title, date) {
+
+//   console.log(title, date);
+
+//   $.get("query.php", { name: title, date: date, action: "createevent" })
+//     .done(function (data) {
+//       alert("Data Loaded: " + data);
+//     });
+
+
+// };
 
 // calendar 
 
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     defaultDate: 'today',
+    // nextDayThreshold: '22:59:00',
     selectable: false,
     editable: false,
     headerToolbar: {
