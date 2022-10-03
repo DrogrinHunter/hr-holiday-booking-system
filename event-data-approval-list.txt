@@ -1,0 +1,6 @@
+status:
+
+0 = requested
+1 = approved
+2 = denied
+3 = cancelled 
