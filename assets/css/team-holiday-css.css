@@ -1,5 +1,6 @@
 .custom-table {
-    width: 1000px;
+    /* width: 1000px; */
+    width: auto;
     height: 100%;
     margin-bottom: 100px;
     margin-left: auto;

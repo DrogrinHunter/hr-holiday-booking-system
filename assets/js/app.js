@@ -87,6 +87,8 @@ function editUserAlert() {
   });
 }
 // ------------------------------------------------------------- Booking Holiday button -------------------------------------------------------------
+// --------------- This is for name-book.php ---------------
+
 function eventSubmitAlert() {
   Swal.fire({
     icon: 'success',
@@ -100,6 +102,8 @@ function eventSubmitAlert() {
 }
 
 // ------------------------------------------------------------- Approve event -------------------------------------------------------------
+// --------------- This is for team-review.php ---------------
+
 function approveid(id) {
   console.log("here");
   $.get("team-review.php", { // query.php has the db connection
@@ -112,6 +116,8 @@ function approveid(id) {
 }
 
 // ------------------------------------------------------------- Deny event -------------------------------------------------------------
+// --------------- This is for team-review.php ---------------
+
 function denyHolId(id) {
   console.log("here");
   $.get("team-review.php", { // query.php has the db connection
@@ -124,6 +130,8 @@ function denyHolId(id) {
 }
 
 // ------------------------------------------------------------- Approve holiday button -------------------------------------------------------------
+// --------------- This is for team-review.php ---------------
+
 function holidayApproveAlert() {
   Swal.fire({
     icon: 'success',
@@ -136,6 +144,8 @@ function holidayApproveAlert() {
 }
 
 // ------------------------------------------------------------- Deny holiday button -------------------------------------------------------------
+// --------------- This is for team-review.php ---------------
+
 function denyHolidayAlert() {
   Swal.fire({
     icon: 'error',
@@ -147,7 +157,81 @@ function denyHolidayAlert() {
     location.replace("team-review.php");
   });
 }
+// ------------------------------------------------------------- Approve Cancellation Request -------------------------------------------------------------
+// --------------- This is for team-cancelled-holidays.php ---------------
+
+function approvecancelreqid(id) {
+  console.log("here");
+  $.get("team-cancelled-holidays.php", { // query.php has the db connection
+    id: id,
+    action: "approvecancelreq"
+  })
+    .done(function (data) {
+      approveCancelReqAlert();
+    });
+}
+
+// ------------------------------------------------------------- Deny Cancellation Request -------------------------------------------------------------
+// --------------- This is for team-cancelled-holidays.php ---------------
+
+function denycancelreqid(id) {
+  console.log("here");
+  $.get("team-cancelled-holidays.php", { // query.php has the db connection
+    id: id,
+    action: "denycancelreq"
+  })
+    .done(function (data) {
+      denyCancelReqAlert();
+    });
+}
+
+// ------------------------------------------------------------- Approve Cancellation button -------------------------------------------------------------
+// --------------- This is for team-cancelled-holidays.php ---------------
+
+function approveCancelReqAlert() {
+  Swal.fire({
+    icon: 'success',
+    title: 'Holiday Cancellation Approved!',
+    showConfirmButton: true,
+    timer: 4000
+  }).then(function () {
+    location.replace("team-cancelled-holidays.php");
+  });
+}
+
+// ------------------------------------------------------------- Deny Cancellation button -------------------------------------------------------------
+// --------------- This is for team-cancelled-holidays.php ---------------
+
+function denyCancelReqAlert() {
+  Swal.fire({
+    icon: 'error',
+    title: 'Cancellation Request Denied!',
+    text: 'Holiday Cancellation Request has been denied',
+    showConfirmButton: true,
+    timer: 4000
+  }).then(function () {
+    location.replace("team-cancelled-holidays.php");
+  });
+}
+
+// ------------------------------------------------------------- User submitted request to cancel holiday alert -------------------------------------------------------------
+// --------------- This is for name-holiday.php ---------------
+
+function swalCancelHolidayAlert() {
+  Swal.fire({
+    icon: 'info',
+    title: 'Holiday Cancellation Request!',
+    text: 'Your request to cancel holiday has been submitted',
+    showConfirmButton: true,
+    timer: 4000
+  }).then(function () {
+    location.replace("name-holiday.php");
+  });
+}
+
 // ------------------------------------------------------------- Open Profile -------------------------------------------------------------
+// --------------- This is for team-user-list.php ---------------
+
 function openProfile(agentguid) {
   location.replace("team-edit-user.php?agentid=" + agentguid);
 

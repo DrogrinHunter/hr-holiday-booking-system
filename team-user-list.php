@@ -28,12 +28,14 @@ include('includes/footer.php');
         $htmltable .= "<table class='custom-table-edit-user' width='500' border='0' cellpadding='3' padding-bottom='50' >
             <tr>
                 <td>User</td>
+                <td>Team</td>
                 <td>Edit</td>
             </tr>
             ";
         // query to pull user's out of the db - this is specific to the TL that signs in.
         $teamtuid = $_SESSION["agentdata"]["tuid"];
-        $sqlteaminf = "SELECT * FROM `users` WHERE tuid = '$teamtuid'";
+        // $sqlteaminf = "SELECT * FROM `users` WHERE tuid = '$teamtuid'";
+        $sqlteaminf = "SELECT * FROM `users` ORDER BY name ASC";
         $result = $conn->query($sqlteaminf);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -41,9 +43,15 @@ include('includes/footer.php');
                 $name = $row["name"];
                 $agentguid = $row["guid"];
 
+                $sqlteamname = "SELECT * FROM `teaminf` WHERE tuid = '$teamtuid'";
+                $resultteamname = $conn ->query($sqlteamname);
+                $rowteamname = $resultteamname->fetch_assoc();
+                $allteamname = $rowteamname['teamname'];
+
                 $htmltable .= "
                     <tr>
                     <td>$name</td>
+                    <td>$allteamname</td>
                     <td><button type='button' onclick=\"openProfile('$agentguid')\" class='btn btn-info'>Edit User</button></td>
                     </td>
                     </tr>

@@ -123,7 +123,7 @@ $icon = substr($firstname, 0, 1);
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <select id="workinghours">
-                                        <option disabled selected value> <?php echo $workinghours ?> </option>
+                                        <option selected value> <?php echo $workinghours ?> </option>
                                         <option value="08:00 - 16:30">08:00 - 16:30</option>
                                         <option value="08:30 - 17:00">08:30 - 17:00</option>
                                         <option value="08:45 - 17:30">08:45 - 17:30</option>
@@ -137,7 +137,7 @@ $icon = substr($firstname, 0, 1);
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <select id="lunchtimes">
-                                        <option disabled selected value> <?php echo $lunchtimes ?> </option>
+                                        <option selected value> <?php echo $lunchtimes ?> </option>
                                         <option value="12:00">12:00</option>
                                         <option value="13:00">13:00</option>
                                     </select>
@@ -167,6 +167,7 @@ $icon = substr($firstname, 0, 1);
                                 </div>
                             </div>
                             <hr>
+                            
                             <div class="row">
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-info" onclick="editUser('<?php echo $agentid; ?>')">Save</button>

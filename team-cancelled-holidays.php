@@ -22,32 +22,30 @@ $firstname = $_SESSION["agentdata"]["firstname"];
     <!-- Page content -->
     <div class="jumbotron jumbotron-fluid rounded">
         <div class="container">
-            <h1 class="display-4">Review Holiday for the <?php echo $teamname ?> Team!</h1>
-            <p class="lead">Approve or deny holiday for your team.</p>
-            <hr class="my-4">
-            <p class="lead">
-                <a class="btn btn-success btn-lg" href="team-check.php" role="button">Check your team's holiday</a>
-            </p>
+            <h1 class="display-4">Cancelled Holiday Requests</h1>
+            <p class="lead">Review cancelled holiday requests for the <?php echo $teamname ?> Team.</p>
+
         </div>
     </div>
 
     <div class="team-check-content-wrapper">
         <div class=card-title>
-            <h5>Approve or Deny Requests</h5>
+            <h5>Cancelled Requests</h5>
         </div>
 
         <div class="custom-table">
             <?php
             $htmltable .= "<table class='custom-table' width='500' border='0' cellpadding='3' padding-bottom='50' >
             <tr>
-                <td>Requested on</td>
-                <td>Date From</td>
-                <td>Date To</td>
-                <td>Total Days</td>
-                <td>Requested By</td>
-                <td>Event Name</td>
-                <td>Approve</td>
-                <td>Deny</td>
+            <td>Date Cancelled</td>
+            <td>User</td>
+            <td>Date From</td>
+            <td>Date To</td>
+            <td>Total Days</td>
+            <td>Event Name</td>
+            <td>Cancellation Reason</td>
+            <td>Approve</td>
+            <td>Deny</td>
             </tr>
             ";
 
@@ -62,7 +60,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 return round($diff / 86400);
             }
 
-            $sql = "SELECT * FROM `eventdata` WHERE approved = 0";
+            $sql = "SELECT * FROM `eventdata` WHERE approved = 3";
             $result = $conn->query($sql);
             if (!$result) {
                 die("invalid query: " . $conn->error);
@@ -71,24 +69,30 @@ $firstname = $_SESSION["agentdata"]["firstname"];
             while ($row = $result->fetch_assoc()) {
                 $_SESSION["eventdata"] = $row;
                 $id = $row["id"];
-                $submittedon = $row["submittedon"];
+                $cancelleddate = $row["cancelleddate"];
+                $cancelreason = $row["cancelholnotes"];
                 $date = $row["date"];
+                $requser = $row[""];
                 $todate = $row["todate"];
                 $name = $row["agentdata"]["name"];
                 $eventname = $row["name"];
-
-                $dateDiff = dateDiff($date, $todate);
+                if ($todate == '0000-00-00 00:00:00') {
+                    $dateDiff = 1;
+                } else {
+                    $dateDiff = dateDiff($date, $todate);
+                }
                 $htmltable .= "
 
             <tr>
-                <td>$submittedon</td>
-                <td>$date</td>
-                <td>$todate</td>
-                <td>$dateDiff</td>
-                <td>$firstname</td>
-                <td>$eventname</td>
-                <td onClick=\"approveid('$id')\"><i class='fa fa-check' aria-hidden='true'></i>
-                <td onClick=\"denyHolId('$id')\"><i class='fa-solid fa-xmark'></i></i>
+            <td>$cancelleddate</td>
+            <td>$firstname</td>
+            <td>$date</td>
+            <td>$todate</td>
+            <td>$dateDiff</td>
+            <td>$eventname</td>
+            <td>$cancelreason</td>
+                <td onClick=\"approvecancelreqid('$id')\"><i class='fa fa-check' aria-hidden='true'></i>
+                <td onClick=\"denycancelreqid('$id')\"><i class='fa-solid fa-xmark'></i></i>
                 </td>
             </tr>
             ";
@@ -99,23 +103,23 @@ $firstname = $_SESSION["agentdata"]["firstname"];
             echo $htmltable;
 
             // ------------------------------------------- approving events in the db -------------------------------------------
-            function approveevent($conn, $id)
+            function approvecancelreq($conn, $id)
             {
-                $sql = "UPDATE `eventdata` SET approved = 1 WHERE id = '$id' ";
+                $sql = "UPDATE `eventdata` SET approved = 4 WHERE id = '$id' ";
 
                 if ($conn->query($sql) === true) {
-                    echo "Approved event successfully";
+                    echo "Cancelled holiday event successfully";
                 } else {
                     echo "Error: " . $sql . "<br>" . $conn->error;
                 }
             }
             // ------------------------------------------- Deny events in the db -------------------------------------------
-            function denyevent($conn, $id)
+            function denycancelreq($conn, $id)
             {
                 $sql = "UPDATE `eventdata` SET approved = 2 WHERE id = '$id' ";
 
                 if ($conn->query($sql) === true) {
-                    echo "Denied event successfully";
+                    echo "Refused holiday cancellation";
                 } else {
                     echo "Error: " . $sql . "<br>" . $conn->error;
                 }

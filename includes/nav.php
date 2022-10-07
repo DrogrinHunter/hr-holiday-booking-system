@@ -3,6 +3,7 @@ session_start();
 $firstname = $_SESSION["agentdata"]["firstname"];
 $teamname = $_SESSION['agentdata']['tuidname'];
 $teamleader = $_SESSION['agentdata']['teamleader'];
+$godmode = $_SESSION['agentdata']['godmode'];
 
 $navbar =
 "
@@ -47,11 +48,24 @@ $navbar =
             <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                <a class='dropdown-item' href='team-check.php'>Check Holiday</a>
                <a class='dropdown-item' href='team-review.php'>Approve / Deny Requests</a>
-               <a class='dropdown-item' href='add-user.php'>Add Users</a>
-               <a class='dropdown-item' href='team-user-list.php'>Edit Team Members</a>
+               <a class='dropdown-item' href='team-cancelled-holidays.php'>Cancelled Requests</a>
             </div>
          </li>";
          } 
+         if ($godmode == 1) {
+            $navbar .=  "
+            <li class='nav-item dropdown'>
+               <a class='nav-link m-2 menu-item dropdown-toggle' href='#' id='navbarDropdownMenuLink'
+                  data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+               User Management
+               </a>
+               <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
+                  <a class='dropdown-item' href='add-user.php'>Add Users</a>
+                  <a class='dropdown-item' href='team-user-list.php'>Edit Team Members</a>
+               </div>
+            </li>";
+            } 
+         ;
 		 $navbar .=
          "
          <li class='nav-item'>
@@ -67,4 +81,3 @@ $navbar =
    </div>
 </nav>
 ";
-?>

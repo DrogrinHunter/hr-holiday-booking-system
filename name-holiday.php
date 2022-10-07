@@ -46,7 +46,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
             </div>
             <div class="dash-box-body box-changes">
                 <h6 class="card-subtitle mb-2"><i class="fa-regular fa-calendar-check"></i> Holiday Remaining</h6>
-                <p class="card-text-2"><?php echo holidayRemaining($conn); ?>.</p>
+                <p class="card-text-2"><?php echo holidayRemaining($conn); ?></p>
             </div>
         </div>
 
@@ -64,7 +64,8 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 <td>Date To</td>
                 <td>Total Days</td>
                 <td>Event Name</td>
-                <td>Cancel holiday</td>
+                <td>Holiday Status</td>
+                <td>Cancel Holiday</td>
             </tr>
             ";
 
@@ -79,7 +80,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                     return round($diff / 86400);
                 }
 
-                $sql = "SELECT * FROM `eventdata` WHERE agentguid = '$agentguid'";
+                $sql = "SELECT * FROM `eventdata` WHERE agentguid = '$agentguid' ORDER BY date";
                 $result = $conn->query($sql);
                 if (!$result) {
                     die("invalid query: " . $conn->error);
@@ -93,6 +94,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                     $todate = $row["todate"];
                     $name = $row["agentdata"]["name"];
                     $eventname = $row["name"];
+                    $status = $row["approved"];
 
                     if ($todate == '0000-00-00 00:00:00') {
                         $dateDiff = 1;
@@ -106,9 +108,36 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 <td>$date</td>
                 <td>$todate</td>
                 <td>$dateDiff</td>
-                <td>$eventname</td>
-                <td style='text-align: center' onClick=swalCancelHol()><i class='fa fa-times' aria-hidden='true' ></i>
-                </td>
+                <td>$eventname</td>"; 
+                
+                if ($status == 0) {
+                    $holstatus = 'Requested';
+                } elseif ($status == 1) {
+                    $holstatus = 'Approved';
+                } elseif ($status == 2) {
+                    $holstatus = 'Denied';
+                } elseif ($status == 3) {
+                    $holstatus = 'Cancellation Requested';
+                } elseif ($status == 4) {
+                    $holstatus = 'Cancellation Approved';
+                }
+                
+                $htmltable .=
+                "<td>$holstatus</td>";
+
+                $faCross = "";
+
+                if ($status == 3 || $status == 2 || $status == 4) {
+                    $onClick = "";
+                    $faCross = "";
+                } else {
+                    // $faCross = "that";
+                    $onClick = "swalCancelHol('$id')";
+                    $faCross = "<i class='fa fa-times' aria-hidden='true' ></i>";
+                };
+                
+                $htmltable .="
+                <td style='text-align: center' onClick=$onClick>$faCross</td>
             </tr>
             ";
                 };
@@ -170,21 +199,33 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 },
             });
 
-            async function swalCancelHol() {
+            async function swalCancelHol(eventid) {
+
+
                 const {
                     value: text
                 } = await Swal.fire({
-                    title: "Enter reason",
-                    input: "textarea",
-                    inputLabel: "Cancellation Reason",
-                    // inputValue: inputValue,
-                    showCancelButton: true,
-                    inputValidator: (value) => {
-                        if (!value) {
-                            return "You need to write something!"
-                        }
-                    }
+                    input: 'textarea',
+                    inputLabel: 'Message',
+                    inputPlaceholder: 'Type your message here...',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true
                 })
+
+                if (text) {
+                    // alert("set eventid: " + eventid + " with readon: " + text)
+                    $.get("query.php", {
+                        id: eventid,
+                        reason: text,
+                        action: "usercancelevent"
+                    }).done(function(data) {
+                        swalCancelHolidayAlert();
+                    });
+
+                }
+
             }
         </script>
 </body>

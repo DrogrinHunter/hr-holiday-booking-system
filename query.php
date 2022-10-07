@@ -23,6 +23,7 @@ $officeloc = $_REQUEST["officeloc"];
 $homeadd = $_REQUEST["homeadd"];
 $lunchtimes = $_REQUEST["lunchtimes"];
 $agentid = $_REQUEST["agentid"];
+$reason = $_REQUEST["reason"];
 
 
 // Create connection
@@ -63,6 +64,18 @@ if ($_REQUEST["action"] == "denyevent") {
     denyevent($conn, $id);
     exit;
 }
+// approving cancelled holiday requests in the calendar
+if ($_REQUEST["action"] == "approvecancelreq") {
+    approvecancelreq($conn, $id);
+    exit;
+}
+// denying events in the calendar 
+if ($_REQUEST["action"] == "denycancelreq") {
+    denycancelreq($conn, $id);
+    exit;
+}
+
+
 
 // ------------------------------------------- Getting users from db - depreciated -------------------------------------------
 function getusers($conn)
@@ -106,7 +119,7 @@ function athuser($conn, $email, $password)
     }
 }
 
-// ------------------------------------------- Get names of all groups -------------------------------------------
+// ------------------------------------------- Get names of all groups for drop down -------------------------------------------
 // --------------- This is for add-user.php ---------------
 
 function teamname($conn)
@@ -228,6 +241,25 @@ function nextDayOff($conn)
     }
 }
 
+// ------------------------------------------- Count of users who are already off on a certain date -------------------------------------------
+// --------------- This is for team-cancelled-holidays.php ---------------
+
+// count of who is off for the snippet section
+function holBookedCount($conn)
+{
+    $date = date("Y-m-d");
+    $sql = "SELECT * FROM `eventdata` WHERE date='$date' ;";
+    print_r($sql);
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $nextDayVal = $row["date"];
+        $nextDay = date('l jS \of F Y', strtotime($nextDayVal));
+        return $nextDay;
+    }
+}
+
 // ------------------------------------------- Getting user's remaining days of their holiday -------------------------------------------
 // --------------- This is for name-holiday.php ---------------
 
@@ -243,6 +275,22 @@ function holidayRemaining($conn)
     $remainder .= $holRemaining;
 
     return $remainder;
+}
+
+// ------------------------------------------- Getting count of user's holiday -------------------------------------------
+// --------------- This is for name-holiday.php ---------------
+
+function holidayUsed($conn)
+{
+    $agentguid = $_SESSION["agentdata"]["guid"];
+    $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved = 1";
+    $result = $conn->query($sql);
+
+    $holUsed = "";
+    $holRemaining = $result->num_rows;
+    $holUsed .= $holRemaining;
+
+    return $holUsed;
 }
 
 // ------------------------------------------- Getting next user off for Team Review -------------------------------------------
@@ -321,4 +369,16 @@ function usersOffThisWeek($conn)
             echo $username;
         }
     }
+}
+
+
+
+// ------------------------------------------- User cancels holiday -------------------------------------------
+// --------------- This is for name-holiday.php ---------------
+
+if ($_REQUEST["action"] == "usercancelevent") {
+    $currentdate = date("Y-m-d H:i:s");
+    $sql = "UPDATE `eventdata` SET approved=3, cancelholnotes='$reason', cancelleddate='$currentdate' WHERE id='$id'";
+    $result = $conn->query($sql);
+    exit;
 }
