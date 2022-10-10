@@ -44,7 +44,7 @@ include('includes/footer.php');
                 $agentguid = $row["guid"];
 
                 $sqlteamname = "SELECT * FROM `teaminf` WHERE tuid = '$teamtuid'";
-                $resultteamname = $conn ->query($sqlteamname);
+                $resultteamname = $conn->query($sqlteamname);
                 $rowteamname = $resultteamname->fetch_assoc();
                 $allteamname = $rowteamname['teamname'];
 

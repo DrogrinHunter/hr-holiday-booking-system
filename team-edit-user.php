@@ -4,7 +4,9 @@ include('includes/nav.php');
 include('includes/css-links.php');
 include('includes/footer.php');
 
+
 $agentguid = $_REQUEST['agentid'];
+$_SESSION["currentagentguid"] = $agentguid;
 
 $sql = "SELECT * FROM `users` WHERE guid = '$agentguid'";
 $result = $conn->query($sql);
@@ -163,11 +165,21 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Contract</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    FILE
+                                    <!-- <form action="includes/upload.php" method="post" enctype="multipart/form-data">
+                                        Select image to upload:
+                                        <input type="file" name="fileToUpload" id="fileToUpload">
+                                        <input type="submit" value="Upload Image" name="submit">
+                                    </form> -->
+                                    <form action="includes/upload.php" method="post" enctype="multipart/form-data">
+                                        Select Image File to Upload:
+                                        <input type="file" name="file">
+                                        <input type="submit" name="submit" value="Upload">
+                                    </form>
+
                                 </div>
                             </div>
                             <hr>
-                            
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-info" onclick="editUser('<?php echo $agentid; ?>')">Save</button>

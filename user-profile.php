@@ -41,7 +41,7 @@ $icon = substr($firstname, 0, 1);
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                            <div class="wrapper-circle">
+                                <div class="wrapper-circle">
                                     <div class="icon">
                                         <?php echo $icon; ?>
                                     </div>
@@ -117,7 +117,7 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Contract</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    FILE
+                                    <?php $targetfile; ?>
                                 </div>
                             </div>
                             <hr>
@@ -126,7 +126,7 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Holiday Amount Remaining</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                <?php echo holidayRemaining($conn); ?></p>
+                                    <?php echo holidayRemaining($conn); ?></p>
                                 </div>
                             </div>
                             <hr>
@@ -135,9 +135,10 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Days Used</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                <?php echo holidayUsed($conn); ?></p>
+                                    <?php echo holidayUsed($conn); ?></p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 

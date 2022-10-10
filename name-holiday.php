@@ -98,6 +98,8 @@ $firstname = $_SESSION["agentdata"]["firstname"];
 
                     if ($todate == '0000-00-00 00:00:00') {
                         $dateDiff = 1;
+                    } elseif ($date = $todate) {
+                        $dateDiff = 1;
                     } else {
                         $dateDiff = dateDiff($date, $todate);
                     }
@@ -108,35 +110,44 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 <td>$date</td>
                 <td>$todate</td>
                 <td>$dateDiff</td>
-                <td>$eventname</td>"; 
-                
-                if ($status == 0) {
-                    $holstatus = 'Requested';
-                } elseif ($status == 1) {
-                    $holstatus = 'Approved';
-                } elseif ($status == 2) {
-                    $holstatus = 'Denied';
-                } elseif ($status == 3) {
-                    $holstatus = 'Cancellation Requested';
-                } elseif ($status == 4) {
-                    $holstatus = 'Cancellation Approved';
-                }
-                
-                $htmltable .=
-                "<td>$holstatus</td>";
+                <td>$eventname</td>";
 
-                $faCross = "";
+                    switch ($status) {
+                        case 0:
+                            $holstatus = 'Requested';
+                            break;
+                        case 1:
+                            $holstatus = 'Approved';
+                            break;
+                        case 2:
+                            $holstatus = 'Denied';
+                            break;
+                        case 3:
+                            $holstatus = 'Cancellation Requested';
+                            break;
+                        case 4:
+                            $holstatus = 'Cancellation Approved';
+                            break;
+                        case 5: 
+                            $holstatus = 'Sickness';
+                            break;
+                    };
 
-                if ($status == 3 || $status == 2 || $status == 4) {
-                    $onClick = "";
+                    $htmltable .=
+                        "<td>$holstatus</td>";
+
                     $faCross = "";
-                } else {
-                    // $faCross = "that";
-                    $onClick = "swalCancelHol('$id')";
-                    $faCross = "<i class='fa fa-times' aria-hidden='true' ></i>";
-                };
-                
-                $htmltable .="
+
+                    if ($status == 3 || $status == 2 || $status == 4 || $status == 5) {
+                        $onClick = "";
+                        $faCross = "";
+                    } else {
+                        // $faCross = "that";
+                        $onClick = "swalCancelHol('$id')";
+                        $faCross = "<i class='fa fa-times' aria-hidden='true' ></i>";
+                    };
+
+                    $htmltable .= "
                 <td style='text-align: center' onClick=$onClick>$faCross</td>
             </tr>
             ";

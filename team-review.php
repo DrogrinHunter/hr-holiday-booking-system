@@ -48,6 +48,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 <td>Event Name</td>
                 <td>Approve</td>
                 <td>Deny</td>
+                <td>Who's off already</td>
             </tr>
             ";
 
@@ -87,8 +88,9 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 <td>$dateDiff</td>
                 <td>$firstname</td>
                 <td>$eventname</td>
-                <td onClick=\"approveid('$id')\"><i class='fa fa-check' aria-hidden='true'></i>
-                <td onClick=\"denyHolId('$id')\"><i class='fa-solid fa-xmark'></i></i>
+                <td style='text-align:center'onClick=\"approveid('$id')\"><i class='fa fa-check' aria-hidden='true'></i>
+                <td style='text-align:center' onClick=\"denyHolId('$id')\"><i class='fa-solid fa-xmark'></i></i>
+                <td style='text-align:center' onClick=\"usersOffOnDate('$date')\"><i class='fa-solid fa-magnifying-glass'></i>
                 </td>
             </tr>
             ";
@@ -120,9 +122,11 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                     echo "Error: " . $sql . "<br>" . $conn->error;
                 }
             }
+
             ?>
         </div>
     </div>
+
     <!-- End of table of data to approve -->
 
     <!-- footer -->
@@ -135,6 +139,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </body>
 

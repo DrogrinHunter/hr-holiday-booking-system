@@ -231,8 +231,25 @@ function swalCancelHolidayAlert() {
 
 // ------------------------------------------------------------- Open Profile -------------------------------------------------------------
 // --------------- This is for team-user-list.php ---------------
-
 function openProfile(agentguid) {
   location.replace("team-edit-user.php?agentid=" + agentguid);
 
+}
+
+// ------------------------------------------------------------- users off on a certain date -------------------------------------------------------------
+// --------------- This is for team-user-list.php ---------------
+function usersOffOnDate(date) {
+  console.log("test")
+  $.get("query.php", { action: "usersOffOnDay", date: date })
+    .done(function (htmldata) {
+
+      Swal.fire({
+        title: 'Who\'s off already',
+        icon: 'info',
+        html:
+          htmldata,
+        showCancelButton: true,
+        focusConfirm: false,
+      })
+    });
 }

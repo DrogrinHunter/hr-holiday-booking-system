@@ -5,3 +5,4 @@ status:
 2 = denied
 3 = cancellation requested 
 4 = cancellation approved
+5 = sickness

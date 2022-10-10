@@ -47,9 +47,16 @@ include('includes/footer.php');
         <!-- Calendar -->
         <div class="calendar-wrapper">
             <div id="calendar">
-                <p><span class="dot-approved"></span> Approved Event</p>
-                <p><span class="dot-requested"></span> Requested Event</p>
-                <p><span class="dot-denied"></span> Denied Event</p>
+                <p style="float: left;">
+                    <span class="dot-approved"></span> Approved Event 
+                    <span class="dot-requested"></span> Requested Event 
+                    <span class="dot-denied"></span> Denied Event 
+                    <span class="dot-sickness"></span> Sickness
+                </p>
+                <!-- <p style="float: left;"><span class="dot-approved"></span> Approved Event <span class="dot-requested"></span> Requested Event <span class="dot-denied"></span> Denied Event <span class="dot-sickness"></span> Sickness</p> -->
+                <!-- <p><span class="dot-requested"></span> Requested Event</p> -->
+                <!-- <p><span class="dot-denied"></span> Denied Event</p> -->
+                <!-- <p><span class="dot-sickness"></span> Sickness</p> -->
             </div>
         </div>
     </div>

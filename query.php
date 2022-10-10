@@ -75,6 +75,11 @@ if ($_REQUEST["action"] == "denycancelreq") {
     exit;
 }
 
+// get users off on a certain day 
+if ($_REQUEST["action"] == "usersOffOnDay") {
+    usersOffOnDay($conn, $date);
+    exit;
+}
 
 
 // ------------------------------------------- Getting users from db - depreciated -------------------------------------------
@@ -209,13 +214,20 @@ function getevents($conn)
             $todate = date('Y-m-d', strtotime($todate));
             $id = $row["id"];
             $approved = $row["approved"];
-            if ($approved == 1) {
-                $style = "green";
-            } elseif ($approved == 0) {
-                $style = "orange";
-            } else {
-                $style = "red";
-            }
+            switch ($approved) {
+                case 0:
+                    $style = "orange";
+                    break;
+                case 1:
+                    $style = "green";
+                    break;
+                case 2:
+                    $style = "red";
+                    break;
+                case 5:
+                    $style = "purple";
+                    break;
+            };
             $events[] = ['title' => $title, 'start' => $date, 'end' => $todate, 'color' => $style];
         }
     } else {
@@ -240,6 +252,24 @@ function nextDayOff($conn)
         return $nextDay;
     }
 }
+
+// ------------------------------------------- Getting who is off -------------------------------------------
+// --------------- This is for name-holiday.php ---------------
+
+// next day off
+function personsoff($conn)
+{
+    $sql = "SELECT * FROM `eventdata` WHERE date >= NOW() LIMIT 1;";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $nextDayVal = $row["date"];
+        $nextDay = date('l jS \of F Y', strtotime($nextDayVal));
+        return $nextDay;
+    }
+}
+
 
 // ------------------------------------------- Count of users who are already off on a certain date -------------------------------------------
 // --------------- This is for team-cancelled-holidays.php ---------------
@@ -381,4 +411,26 @@ if ($_REQUEST["action"] == "usercancelevent") {
     $sql = "UPDATE `eventdata` SET approved=3, cancelholnotes='$reason', cancelleddate='$currentdate' WHERE id='$id'";
     $result = $conn->query($sql);
     exit;
+}
+
+
+function usersOffOnDay($conn, $date)
+{
+    $sql = "SELECT * FROM `eventdata` WHERE date = '$date' AND approved=1";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $agentguid = $row["agentguid"];
+
+            $sqlusers = "SELECT * FROM `users` WHERE guid = '$agentguid'";
+            $resultsusers = $conn->query($sqlusers);
+            $rowusers = $resultsusers->fetch_assoc();
+
+            $agentname = $rowusers["name"];
+            echo $agentname;
+            echo "<br>";
+
+        };
+    }
 }
