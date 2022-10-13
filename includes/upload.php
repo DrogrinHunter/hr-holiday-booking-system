@@ -11,11 +11,11 @@ $statusMsg = '';
 
 // File upload path
 $targetDir = "../assets/userfiles/";
-$fileName = basename($_FILES["file"]["name"]);
+$fileName = strtolower(basename($_FILES["file"]["name"]));
 $targetFilePath = $targetDir . $fileName;
 $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
 
-if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
+if (!empty($_FILES["file"]["name"])) {
   // Allow certain file formats
   $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
   if (in_array($fileType, $allowTypes)) {
@@ -38,7 +38,25 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
   }
 } else {
   $statusMsg = 'Please select a file to upload.';
-}
+};
+
+
+echo $_FILES["file"]["name"];
+echo "<br>";
+echo $_FILES["file"]["tmp_name"];
+echo $statusMsg;
+
+print_r($_FILES["file"]);
+
 
 // Display status message
-echo $statusMsg;
+// echo $statusMsg;
+
+
+if ($success = "true") {
+  header('Location: ../team-user-list.php');
+  die();
+} else {
+  header('Location: https://bit.ly/3TbrUbf/');
+  die();
+}

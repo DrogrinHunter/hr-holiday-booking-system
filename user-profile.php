@@ -117,7 +117,7 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Contract</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php $targetfile; ?>
+                                    <?php userProfileFiles($conn, $agentguid); ?>
                                 </div>
                             </div>
                             <hr>

@@ -41,6 +41,8 @@ function createUser() {
 }
 
 // ------------------------------------------------------------- Edit user in DB -------------------------------------------------------------
+var dataChange = false;
+
 function editUser(agentid) {
   console.log('here');
 
@@ -59,11 +61,22 @@ function editUser(agentid) {
   })
     .done(function (data) {
       console.log("user edited");
+      
       console.log("Data Loaded: " + data);
+      dataChange = false;
     });
 
   editUserAlert();
 }
+// ------------------------------------------------------------- checking for changes and notifying users that changes have been made -------------------------------------------------------------
+function userChangedData() {
+  dataChange = true;
+}
+
+function savedChangesAlert() {
+  
+}
+
 // ------------------------------------------------------------- Alert for new user -------------------------------------------------------------
 function newUserAlert() {
   Swal.fire({
@@ -82,9 +95,10 @@ function editUserAlert() {
     title: 'User has been edited!',
     showConfirmButton: true,
     timer: 4000
-  }).then(function () {
-    location.replace("team-user-list.php");
-  });
+  })
+  // .then(function () {
+  //   location.replace("team-user-list.php");
+  // });
 }
 // ------------------------------------------------------------- Booking Holiday button -------------------------------------------------------------
 // --------------- This is for name-book.php ---------------
@@ -252,4 +266,10 @@ function usersOffOnDate(date) {
         focusConfirm: false,
       })
     });
+}
+// ------------------------------------------------------------- download files for user profile / team edit user -------------------------------------------------------------
+
+
+function downloadFileNow(fileURL) {
+  window.open("query.php?action=fileDownload&fileURL=" + fileURL, "_blank") || window.location.replace("query.php?action=fileDownload&fileURL=" + fileURL);
 }

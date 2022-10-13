@@ -24,6 +24,7 @@ $homeadd = $_REQUEST["homeadd"];
 $lunchtimes = $_REQUEST["lunchtimes"];
 $agentid = $_REQUEST["agentid"];
 $reason = $_REQUEST["reason"];
+$fileURL = $_REQUEST["fileURL"];
 
 
 // Create connection
@@ -79,6 +80,11 @@ if ($_REQUEST["action"] == "denycancelreq") {
 if ($_REQUEST["action"] == "usersOffOnDay") {
     usersOffOnDay($conn, $date);
     exit;
+}
+
+// file download
+if ($_REQUEST["action"] == "fileDownload") {
+    fileDownload();
 }
 
 
@@ -430,7 +436,105 @@ function usersOffOnDay($conn, $date)
             $agentname = $rowusers["name"];
             echo $agentname;
             echo "<br>";
-
         };
     }
 }
+
+
+// ------------------------------------------- Retrieving / downloading files from Db -------------------------------------------
+// --------------- This is for team-edit-user.php ---------------
+
+function userFilesInDB($conn, $agentid)
+{
+    $sql = "SELECT * FROM `userfiles` WHERE agentguid = '$agentid'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $fileURL = $row["filename"];
+
+            echo "<a onClick='downloadFileNow(`assets/userfiles/$fileURL`)'>$fileURL</a>";
+            echo "<br>";
+        };
+    };
+};
+
+function fileDownload()
+{
+    //Read the filename
+    // $filename = "";
+    // $filename .= "../assets/userfiles/";
+    $filename = $_REQUEST["fileURL"];
+    
+    //Check the file exists or not
+    if (file_exists($filename)) {
+
+        //Define header information
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Expires: 0");
+        header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
+        header('Content-Length: ' . filesize($filename));
+        header('Pragma: public');
+
+        //Clear system output buffer
+        flush();
+
+        //Read the size of the file
+        readfile($filename);
+
+        //Terminate from the script
+        die();
+    } else {
+        echo "File does not exist.";
+    }
+};
+
+// ------------------------------------------- Retrieving / downloading files from Db -------------------------------------------
+// --------------- This is for team-edit-user.php ---------------
+
+function userProfileFiles($conn, $agentguid)
+{
+    $sql = "SELECT * FROM `userfiles` WHERE agentguid = '$agentguid'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $fileURL = $row["filename"];
+
+            echo "<a onClick='downloadFileNow(`assets/userfiles/$fileURL`)'>$fileURL</a>";
+            echo "<br>";
+        };
+    };
+};
+
+function userfileDownload()
+{
+    //Read the filename
+    // $filename = "";
+    // $filename .= "../assets/userfiles/";
+    $filename = $_REQUEST["fileURL"];
+    
+    //Check the file exists or not
+    if (file_exists($filename)) {
+
+        //Define header information
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Expires: 0");
+        header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
+        header('Content-Length: ' . filesize($filename));
+        header('Pragma: public');
+
+        //Clear system output buffer
+        flush();
+
+        //Read the size of the file
+        readfile($filename);
+
+        //Terminate from the script
+        die();
+    } else {
+        echo "File does not exist.";
+    }
+};
