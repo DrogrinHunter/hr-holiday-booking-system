@@ -5,7 +5,13 @@ include('query.php');
 include('includes/footer.php');
 
 $teamname = $_SESSION['agentdata']['tuidname'];
-$firstname = $_SESSION["agentdata"]["firstname"];
+// $firstname = $_SESSION["agentdata"]["firstname"];
+
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
+
 
 ?>
 <!DOCTYPE html>
@@ -72,7 +78,14 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 $cancelleddate = $row["cancelleddate"];
                 $cancelreason = $row["cancelholnotes"];
                 $date = $row["date"];
-                $requser = $row[""];
+                $reqguid = $row["agentguid"];
+                // ---------------------------------------------------------------
+                // getting the requested user's name from their agent guid
+                $sqlusers = "SELECT * FROM `users` WHERE guid = '$reqguid'";
+                $resultsusers = $conn->query($sqlusers);
+                $rowusers = $resultsusers->fetch_assoc();
+                $reqname = $rowusers["name"];
+                // ---------------------------------------------------------------
                 $todate = $row["todate"];
                 $name = $row["agentdata"]["name"];
                 $eventname = $row["name"];
@@ -85,7 +98,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
 
             <tr>
             <td>$cancelleddate</td>
-            <td>$firstname</td>
+            <td>$reqname</td>
             <td>$date</td>
             <td>$todate</td>
             <td>$dateDiff</td>

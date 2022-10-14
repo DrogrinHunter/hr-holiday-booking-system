@@ -126,7 +126,7 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Holiday Amount Remaining</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php echo holidayRemaining($conn); ?></p>
+                                    <?php echo holidayRemaining($conn); ?>
                                 </div>
                             </div>
                             <hr>
@@ -135,7 +135,7 @@ $icon = substr($firstname, 0, 1);
                                     <h6 class="mb-0">Days Used</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <?php echo holidayUsed($conn); ?></p>
+                                    <?php echo holidayUsed($conn); ?>
                                 </div>
                             </div>
 

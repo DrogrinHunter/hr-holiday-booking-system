@@ -6,3 +6,5 @@ status:
 3 = cancellation requested 
 4 = cancellation approved
 5 = sickness
+6 = Maternity Leave
+7 = Paternity Leave

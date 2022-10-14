@@ -52,6 +52,8 @@ include('includes/footer.php');
                     <span class="dot-requested"></span> Requested Event 
                     <span class="dot-denied"></span> Denied Event 
                     <span class="dot-sickness"></span> Sickness
+                    <span class="dot-maternity"></span> Maternity Leave
+                    <span class="dot-paternity"></span> Paternity Leave
                 </p>
                 <!-- <p style="float: left;"><span class="dot-approved"></span> Approved Event <span class="dot-requested"></span> Requested Event <span class="dot-denied"></span> Denied Event <span class="dot-sickness"></span> Sickness</p> -->
                 <!-- <p><span class="dot-requested"></span> Requested Event</p> -->

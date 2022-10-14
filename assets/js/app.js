@@ -15,6 +15,24 @@ function addEventToDB() {
   eventSubmitAlert();
 }
 
+// ------------------------------------------------------------- Add an additional event to DB -------------------------------------------------------------
+function addAdditionalEventToDB() {
+  console.log("here");
+  $.get("query.php", {
+    name: $("#title").val(),
+    date: $("#date").val(),
+    todate: $("#toDate").val(),
+    agentid: $("#userfield").val(),
+    approvedStatus: $("#eventfield").val(),
+    action: "createadditionalevent"
+  })
+    .done(function (data) {
+      console.log("Data Loaded: " + data);
+      // alert("Data Loaded: " + data);
+    });
+  additionalEventSubmitAlert();
+}
+
 // ------------------------------------------------------------- Add user to DB -------------------------------------------------------------
 function createUser() {
   console.log('here');
@@ -61,7 +79,7 @@ function editUser(agentid) {
   })
     .done(function (data) {
       console.log("user edited");
-      
+
       console.log("Data Loaded: " + data);
       dataChange = false;
     });
@@ -74,7 +92,7 @@ function userChangedData() {
 }
 
 function savedChangesAlert() {
-  
+
 }
 
 // ------------------------------------------------------------- Alert for new user -------------------------------------------------------------
@@ -115,6 +133,19 @@ function eventSubmitAlert() {
   });
 }
 
+// ------------------------------------------------------------- Booking Additional Holiday button -------------------------------------------------------------
+// --------------- This is for book-hol.php ---------------
+function additionalEventSubmitAlert() {
+  Swal.fire({
+    icon: 'success',
+    title: 'Thanks!',
+    text: 'Additional events added.',
+    showConfirmButton: true,
+    timer: 4000
+  }).then(function () {
+    location.replace("index.php");
+  });
+}
 // ------------------------------------------------------------- Approve event -------------------------------------------------------------
 // --------------- This is for team-review.php ---------------
 
@@ -262,9 +293,10 @@ function usersOffOnDate(date) {
         icon: 'info',
         html:
           htmldata,
-        showCancelButton: true,
+        showCancelButton: false,
         focusConfirm: false,
       })
+      console.log(htmldata);
     });
 }
 // ------------------------------------------------------------- download files for user profile / team edit user -------------------------------------------------------------

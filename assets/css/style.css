@@ -134,6 +134,20 @@ body {
     border-radius: 50%;
     display: inline-block;
 }
+.dot-maternity {
+    height: 25px;
+    width: 25px;
+    background-color: pink;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot-paternity {
+    height: 25px;
+    width: 25px;
+    background-color: blue;
+    border-radius: 50%;
+    display: inline-block;
+}
 /* ------------------------------------ User's holiday ------------------------------------ */
 .name-hol-content-wrapper {
     width: 100%;

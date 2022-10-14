@@ -62,6 +62,7 @@ $navbar =
                <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                   <a class='dropdown-item' href='add-user.php'>Add Users</a>
                   <a class='dropdown-item' href='team-user-list.php'>Edit Team Members</a>
+                  <a class='dropdown-item' href='book-hol.php'>Manually Book Holiday</a>
                </div>
             </li>";
             } 

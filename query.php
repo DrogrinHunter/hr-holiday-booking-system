@@ -25,6 +25,7 @@ $lunchtimes = $_REQUEST["lunchtimes"];
 $agentid = $_REQUEST["agentid"];
 $reason = $_REQUEST["reason"];
 $fileURL = $_REQUEST["fileURL"];
+$approvedStatus = $_REQUEST["approvedStatus"];
 
 
 // Create connection
@@ -50,6 +51,10 @@ if ($_REQUEST["action"] == "ath") {
 // creating an event in the calendar
 if ($_REQUEST['action'] == "createevent") {
     createevent($conn, $name, $date, $todate);
+}
+// creating an additional event in the calendar
+if ($_REQUEST['action'] == "createadditionalevent") {
+    createadditionalevent($conn, $name, $date, $todate, $agentid, $approvedStatus);
 }
 // retrieving events from the calendar
 if ($_REQUEST["action"] == "getevents") {
@@ -201,7 +206,20 @@ function createevent($conn, $name, $date, $todate)
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
+// ------------------------------------------- Creating additional events in the db -------------------------------------------
+// --------------- This is for name-book.php ---------------
+function createadditionalevent($conn, $name, $date, $todate, $agentid, $approvedStatus)
+{
+    $currentdate = date("Y-m-d H:i:s");
+    $sql = "INSERT INTO `eventdata` (agentguid, submittedon, name, date, approved, todate)
+    VALUES ('$agentid', '$currentdate', '$name', '$date', '$approvedStatus', '$todate')";
 
+    if ($conn->query($sql) === true) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
 // ------------------------------------------- Getting events from the db -------------------------------------------
 function getevents($conn)
 {
@@ -232,6 +250,12 @@ function getevents($conn)
                     break;
                 case 5:
                     $style = "purple";
+                    break;
+                case 6:
+                    $style = "pink";
+                    break;
+                case 7:
+                    $style = "blue";
                     break;
             };
             $events[] = ['title' => $title, 'start' => $date, 'end' => $todate, 'color' => $style];
@@ -364,21 +388,21 @@ function usersOffToday($conn)
     $datefrom = date("Y-m-d");
     $sql = "SELECT * FROM `eventdata` WHERE date = ('$datefrom 00:00:00') AND approved=1 ORDER BY date ASC;";
     $result = $conn->query($sql);
+    $username = "No one is off today";
     // $row = $result->fetch_assoc();
     if ($result->num_rows > 0) {
+        $username = "";
         while ($row = $result->fetch_assoc()) {
             $eventguid = $row["agentguid"];
 
             $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
             $resultUserName = $conn->query($sqlUserName);
             $rowUserName = $resultUserName->fetch_assoc();
-
-            $username = "";
+            
             $username .= "$rowUserName[name] <br>";
-
-            echo $username;
         }
     }
+    echo $username;
 }
 
 // ------------------------------------------- Getting which users are off this week -------------------------------------------
@@ -424,8 +448,9 @@ function usersOffOnDay($conn, $date)
 {
     $sql = "SELECT * FROM `eventdata` WHERE date = '$date' AND approved=1";
     $result = $conn->query($sql);
-
+    $agentname = "No one is off on that day";
     if ($result->num_rows > 0) {
+        $agentname = "";
         while ($row = $result->fetch_assoc()) {
             $agentguid = $row["agentguid"];
 
@@ -434,10 +459,11 @@ function usersOffOnDay($conn, $date)
             $rowusers = $resultsusers->fetch_assoc();
 
             $agentname = $rowusers["name"];
-            echo $agentname;
-            echo "<br>";
+
         };
     }
+    echo $agentname;
+    echo "<br>";
 }
 
 
@@ -464,7 +490,7 @@ function fileDownload()
     // $filename = "";
     // $filename .= "../assets/userfiles/";
     $filename = $_REQUEST["fileURL"];
-    
+
     //Check the file exists or not
     if (file_exists($filename)) {
 
@@ -513,7 +539,7 @@ function userfileDownload()
     // $filename = "";
     // $filename .= "../assets/userfiles/";
     $filename = $_REQUEST["fileURL"];
-    
+
     //Check the file exists or not
     if (file_exists($filename)) {
 
@@ -538,3 +564,17 @@ function userfileDownload()
         echo "File does not exist.";
     }
 };
+
+// ------------------------------------------- Get names of all users for drop down -------------------------------------------
+// --------------- This is for book-hol.php ---------------
+
+function userlist($conn)
+{
+    $sql = "SELECT * FROM `users` ORDER BY name ASC";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $usersname = $row['name'];
+        $agentid = $row['guid'];
+        echo "<option value='$agentid'>$usersname</option>";
+    }
+}

@@ -5,6 +5,7 @@ include('query.php');
 include('includes/name-hol-piechart.php');
 include('includes/footer.php');
 // session_start();
+
 $firstname = $_SESSION["agentdata"]["firstname"];
 ?>
 <!DOCTYPE html>
@@ -131,6 +132,12 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                         case 5: 
                             $holstatus = 'Sickness';
                             break;
+                        case 6:
+                            $holstatus = 'Maternity Leave';
+                            break;
+                        case 7: 
+                            $holstatus = 'Paternity Leave';
+                            break;
                     };
 
                     $htmltable .=
@@ -138,7 +145,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
 
                     $faCross = "";
 
-                    if ($status == 3 || $status == 2 || $status == 4 || $status == 5) {
+                    if ($status == 3 || $status == 2 || $status == 4 || $status == 5 || $status == 6 || $status == 7) {
                         $onClick = "";
                         $faCross = "";
                     } else {

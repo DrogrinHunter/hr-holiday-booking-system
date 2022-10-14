@@ -53,7 +53,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
             ";
 
             // table query
-            $agentguid = $_SESSION["agentdata"]["guid"];
+
             // function that compares two dates and works out the time in between
             function dateDiff($date, $todate)
             {
@@ -71,14 +71,26 @@ $firstname = $_SESSION["agentdata"]["firstname"];
             // reading data for each row
             while ($row = $result->fetch_assoc()) {
                 $_SESSION["eventdata"] = $row;
+                $name = $row["agentdata"]["name"];
+                $reqguid = $row["agentguid"];
+                // ---------------------------------------------------------------
+                // getting the requested user's name from their agent guid
+                $sqlusers = "SELECT * FROM `users` WHERE guid = '$reqguid'";
+                $resultsusers = $conn->query($sqlusers);
+                $rowusers = $resultsusers->fetch_assoc();
+                $reqname = $rowusers["name"];
+                // ---------------------------------------------------------------
+
                 $id = $row["id"];
                 $submittedon = $row["submittedon"];
                 $date = $row["date"];
                 $todate = $row["todate"];
-                $name = $row["agentdata"]["name"];
                 $eventname = $row["name"];
-
-                $dateDiff = dateDiff($date, $todate);
+                if ($todate == '0000-00-00 00:00:00') {
+                    $dateDiff = 1;
+                } else {
+                    $dateDiff = dateDiff($date, $todate);
+                }
                 $htmltable .= "
 
             <tr>
@@ -86,7 +98,7 @@ $firstname = $_SESSION["agentdata"]["firstname"];
                 <td>$date</td>
                 <td>$todate</td>
                 <td>$dateDiff</td>
-                <td>$firstname</td>
+                <td>$reqname</td>
                 <td>$eventname</td>
                 <td style='text-align:center'onClick=\"approveid('$id')\"><i class='fa fa-check' aria-hidden='true'></i>
                 <td style='text-align:center' onClick=\"denyHolId('$id')\"><i class='fa-solid fa-xmark'></i></i>
