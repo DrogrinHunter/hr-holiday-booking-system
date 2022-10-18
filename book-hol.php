@@ -57,7 +57,7 @@ include('includes/footer.php');
 
                             <label for="event"><b>Choose Event</b></label>
                             <select id="eventfield">
-                                <option disabled selected value> -- Select a Reason -- </option>
+                                <option disabled selected value> -- Select an event -- </option>
                                 <option value="0">Holiday</option>
                                 <option value="5">Sickness</option>
                                 <option value="6">Maternity Leave</option>

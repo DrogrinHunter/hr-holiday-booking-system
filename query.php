@@ -226,7 +226,7 @@ function getevents($conn)
     header('Content-Type: application/json; charset=utf-8');
     $agentguid = $_SESSION["agentdata"]["guid"];
     // $sql = "SELECT * FROM `eventdata` WHERE agentguid='$agentguid' AND approved=1";
-    $sql = "SELECT * FROM `eventdata`";
+    $sql = "SELECT * FROM `eventdata` WHERE approved NOT LIKE 3 AND approved NOT LIKE 4;";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -386,7 +386,8 @@ function usersOffToday($conn)
     $agentguid = $_SESSION["agentdata"]["guid"];
 
     $datefrom = date("Y-m-d");
-    $sql = "SELECT * FROM `eventdata` WHERE date = ('$datefrom 00:00:00') AND approved=1 ORDER BY date ASC;";
+    // $sql = "SELECT * FROM `eventdata` WHERE approved=1 AND (date OR todate = '$datefrom') ORDER BY date ASC;";
+    $sql = "SELECT * FROM `eventdata` WHERE approved=1 AND (date OR todate = NOW()) ORDER BY date ASC;";
     $result = $conn->query($sql);
     $username = "No one is off today";
     // $row = $result->fetch_assoc();
@@ -413,9 +414,12 @@ function usersOffThisWeek($conn)
 
     $datefrom = date("Y-m-d");
     $dateto = Date('Y-m-d', strtotime('+7 days'));
-    $sql = "SELECT * FROM `eventdata` WHERE date BETWEEN ('$datefrom 00:00:00') AND ('$dateto 00:00:00') AND approved=1 GROUP BY agentguid ORDER BY date;";
+    $sql = "SELECT * FROM `eventdata` WHERE approved=1 AND (date AND todate BETWEEN '$datefrom' AND '$dateto')  GROUP BY agentguid ORDER BY date;";
     $result = $conn->query($sql);
+    $username = "No one is off today";
+
     if ($result->num_rows > 0) {
+        $username = "";
         while ($row = $result->fetch_assoc()) {
             $eventguid = $row["agentguid"];
 
@@ -426,9 +430,9 @@ function usersOffThisWeek($conn)
             $username = "";
             $username .= "$rowUserName[name] <br>";
 
-            echo $username;
         }
     }
+    echo $username;
 }
 
 
