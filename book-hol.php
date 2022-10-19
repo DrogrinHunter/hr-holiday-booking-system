@@ -39,7 +39,6 @@ include('includes/footer.php');
                             <div>
                                 <input type="text" name="title" id="title" class="form-control" placeholder="Event" required />
                             </div>
-                            <hr>
                             <!-- <input type="email" name="email" id="emailaddress" class="form-control" placeholder="Email Address" required /> -->
                             <div style="float: left; width: 50%">
                                 <input type="text" id="date" name="date" placeholder="From">

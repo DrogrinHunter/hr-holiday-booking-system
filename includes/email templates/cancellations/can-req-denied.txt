@@ -1,0 +1,8 @@
+Hi %firstname%,
+
+We have received the cancellation request for holiday of %date% to the %todate% - unfortunately, we are unable to approve the cancellation request and your team leader will be in touch as to why.
+
+If the cancellation request was a mistake then please let your team leader know as soon as possible.
+
+Thanks,
+MFM-IT 

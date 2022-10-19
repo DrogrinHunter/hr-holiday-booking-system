@@ -32,7 +32,7 @@ include('includes/footer.php');
                 <h6 class="card-subtitle mb-2 bold"><i class="fa-solid fa-calendar-week"></i> Who's Off This Week</h6>
                 <p class="card-text"><?php usersOffThisWeek($conn) ?></p>
             </div>
-            <div class="main-box-body box-changes">
+            <!-- <div class="main-box-body box-changes">
                 <h6 class="card-subtitle mb-2 bold">Card subtitle</h6>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
@@ -41,7 +41,7 @@ include('includes/footer.php');
                 <h6 class="card-subtitle mb-2 bold">Card subtitle</h6>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
-            </div>
+            </div> -->
         </div>
         <!-- End of Card Wrappers-->
         <!-- Calendar -->
