@@ -1,4 +1,7 @@
 <?php
+include("send_imap.php");
+
+
 $servername = "localhost";
 $username = "c13dev2";
 $mysqlpassword = "kkvSLMw#FFd6";
@@ -197,17 +200,19 @@ function createevent($conn, $name, $date, $todate)
     $agentguid = $_SESSION["agentdata"]["guid"];
     $currentdate = date("Y-m-d H:i:s");
     $email = $_SESSION["agentdata"]["email"];
+    $firstname = $_SESSION["agentdata"]["firstname"];
     $sql = "INSERT INTO `eventdata` (agentguid, submittedon, name, date, approved, todate)
     VALUES ('$agentguid', '$currentdate', '$name', '$date', 0, '$todate')";
 
     if ($conn->query($sql) === true) {
         echo "New record created successfully";
+        sendEmail(0, $firstname, $email, $date, $todate);
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 // ------------------------------------------- Creating additional events in the db -------------------------------------------
-// --------------- This is for name-book.php ---------------
+// --------------- This is for book-hol.php ---------------
 function createadditionalevent($conn, $name, $date, $todate, $agentid, $approvedStatus)
 {
     $currentdate = date("Y-m-d H:i:s");
@@ -216,6 +221,15 @@ function createadditionalevent($conn, $name, $date, $todate, $agentid, $approved
 
     if ($conn->query($sql) === true) {
         echo "New record created successfully";
+        $sqlusers = "SELECT * FROM `users` WHERE guid = '$agentid'";
+        $resultsusers = $conn->query($sqlusers);
+        $rowusers = $resultsusers->fetch_assoc();
+
+        print_r($rowusers);
+        $firstname = $rowusers["firstname"];
+        $email = $rowusers["email"];
+
+        sendEmail($approvedStatus, $firstname, $email, $date, $todate);
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -399,7 +413,7 @@ function usersOffToday($conn)
             $sqlUserName = "SELECT name FROM `users` WHERE guid = '$eventguid'";
             $resultUserName = $conn->query($sqlUserName);
             $rowUserName = $resultUserName->fetch_assoc();
-            
+
             $username .= "$rowUserName[name] <br>";
         }
     }
@@ -429,7 +443,6 @@ function usersOffThisWeek($conn)
 
             $username = "";
             $username .= "$rowUserName[name] <br>";
-
         }
     }
     echo $username;
@@ -463,7 +476,6 @@ function usersOffOnDay($conn, $date)
             $rowusers = $resultsusers->fetch_assoc();
 
             $agentname = $rowusers["name"];
-
         };
     }
     echo $agentname;

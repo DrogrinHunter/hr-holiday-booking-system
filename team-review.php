@@ -115,10 +115,31 @@ $firstname = $_SESSION["agentdata"]["firstname"];
             // ------------------------------------------- approving events in the db -------------------------------------------
             function approveevent($conn, $id)
             {
+
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
                 $sql = "UPDATE `eventdata` SET approved = 1 WHERE id = '$id' ";
 
                 if ($conn->query($sql) === true) {
                     echo "Approved event successfully";
+                    $sqlSendEmail = "SELECT * FROM `eventdata` WHERE id = '$id'";
+                    $result = $conn->query($sqlSendEmail);
+                    $row = $result->fetch_assoc();
+                    
+                    $agentguid = $row["agentguid"];
+                    $date = $row["date"];
+                    $todate = $row["todate"];
+                    
+                    $sqlusers = "SELECT * FROM `users` WHERE guid = '$agentguid'";
+                    $resultsusers = $conn->query($sqlusers);
+                    $rowusers = $resultsusers->fetch_assoc();
+                    
+                    print_r($rowusers);
+                    $firstname = $rowusers["firstname"];
+                    $email = $rowusers["email"];
+
+                    sendEmail(1, $firstname, $email, $date, $todate);
                 } else {
                     echo "Error: " . $sql . "<br>" . $conn->error;
                 }
@@ -130,6 +151,23 @@ $firstname = $_SESSION["agentdata"]["firstname"];
 
                 if ($conn->query($sql) === true) {
                     echo "Denied event successfully";
+                    $sqlSendEmail = "SELECT * FROM `eventdata` WHERE id = '$id'";
+                    $result = $conn->query($sqlSendEmail);
+                    $row = $result->fetch_assoc();
+                    
+                    $agentguid = $row["agentguid"];
+                    $date = $row["date"];
+                    $todate = $row["todate"];
+                    
+                    $sqlusers = "SELECT * FROM `users` WHERE guid = '$agentguid'";
+                    $resultsusers = $conn->query($sqlusers);
+                    $rowusers = $resultsusers->fetch_assoc();
+                    
+                    print_r($rowusers);
+                    $firstname = $rowusers["firstname"];
+                    $email = $rowusers["email"];
+
+                    sendEmail(2, $firstname, $email, $date, $todate);
                 } else {
                     echo "Error: " . $sql . "<br>" . $conn->error;
                 }

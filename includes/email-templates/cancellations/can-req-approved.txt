@@ -1,0 +1,10 @@
+Hi %firstname%,<br><br>
+
+We have cancelled the holiday request for the %date% to the %todate%! <br><br>
+
+The days have been added back onto your holiday allowance.<br><br>
+
+If this was a mistake then please let your team leader know as soon as possible.<br><br>
+
+Thanks,
+MFM-IT 

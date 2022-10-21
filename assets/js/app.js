@@ -157,6 +157,9 @@ function approveid(id) {
   })
     .done(function (data) {
       holidayApproveAlert();
+    })
+    .fail(function (data) {
+      console.log(data)
     });
 }
 

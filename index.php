@@ -26,7 +26,8 @@ include('includes/footer.php');
         <div class="card-wrapper">
             <div class="main-box-body box-changes">
                 <h6 class="card-subtitle mb-2 bold"><i class="fa-solid fa-calendar-day"></i> Who's Off Today</h6>
-                <p class="card-text"><?php usersOffToday($conn); ?></p>
+                <!-- <p class="card-text"><?php //usersOffToday($conn); ?></p> -->
+                <p class="card-text">Coming soon</p>
             </div>
             <div class="main-box-body box-changes">
                 <h6 class="card-subtitle mb-2 bold"><i class="fa-solid fa-calendar-week"></i> Who's Off This Week</h6>

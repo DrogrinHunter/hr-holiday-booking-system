@@ -1,0 +1,8 @@
+Hi %firstname%,<br><br>
+
+Unfortunately, your holiday request for the %date% to the %todate% has been denied.<br><br>
+
+Your team leader will be in touch with you as to why soon.<br><br>
+
+Thanks,
+MFM-IT 

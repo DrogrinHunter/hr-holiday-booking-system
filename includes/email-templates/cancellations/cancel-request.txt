@@ -1,0 +1,8 @@
+Hi %firstname%,<br><br>
+
+You have requested to cancel your holiday for the %date% to the %todate%! <br><br>
+
+This has gone across to be approved - if this was a mistake then please let your team leader know as soon as possible.<br><br>
+
+Thanks,
+MFM-IT 

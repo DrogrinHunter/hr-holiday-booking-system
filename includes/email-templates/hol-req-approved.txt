@@ -1,0 +1,10 @@
+Hi %firstname%,<br><br>
+
+Your holiday has been approved for the %date% to the %todate%! <br><br>
+
+Remember to put an out of office message on! <br><br>
+
+If you need to cancel this then you can do so by going to "Your Profile" in the holiday system! <br><br>
+
+Thanks,<br><br>
+MFM-IT 

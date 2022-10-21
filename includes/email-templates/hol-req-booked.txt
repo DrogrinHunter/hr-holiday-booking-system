@@ -1,0 +1,10 @@
+Hi %firstname%,<br>
+
+Thanks for booking some holiday - just to confirm, you have booked from %date% to the %todate%.<br><br>
+
+This has gone across to be approved so we will let you know once it has been.<br><br>
+
+If you need to cancel this then you can do so by going to "Your Profile" in the holiday system! <br><br>
+
+Thanks,
+MFM-IT 
