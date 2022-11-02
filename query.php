@@ -3,9 +3,9 @@ include("send_imap.php");
 
 
 $servername = "localhost";
-$username = "c13dev2";
-$mysqlpassword = "kkvSLMw#FFd6";
-$db = "c0dev2mfmit";
+$username = "";
+$mysqlpassword = "";
+$db = "";
 session_start();
 
 $email = $_REQUEST["email"];
