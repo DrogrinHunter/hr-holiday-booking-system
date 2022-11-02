@@ -59,7 +59,7 @@ include('includes/login-css.php')
         <!-- hidden spacer to center brand on mobile -->
       </span>
       <a class="navbar-brand d-none d-lg-inline-block" href="index.php">
-        <img class="main_logo" src="assets/img/resized-logo.png">
+        <img class="main_logo" src="assets/img/resized-logo.png" alt="Branding Logo">
         Holiday Bookings
       </a>
       <div class="w-100 text-right">
